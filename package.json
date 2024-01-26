@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "webpack-dev": "webpack --mode development --watch --config webpack.config.dev.cjs",
+    "webpack-prod": "webpack --mode production --config webpack.config.prod.cjs",
+    "predeploy": "yarn webpack-prod",
+    "deploy": "gh-pages -d public"
+  },
+  "type": "module",
+  "dependencies": {
+    "@common-module/app": "^0.0.1"
+  },
+  "devDependencies": {}
+}
