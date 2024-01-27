@@ -1,0 +1,31 @@
+.title-bar-user-display {
+    display      : flex;
+    align-items  : center;
+    gap          : 10px;
+    border       : 1px solid var(--primary-color);
+    border-radius: 19px;
+    padding      : 5px 10px 5px 5px;
+    cursor       : pointer;
+
+    &:hover {
+        background-color: var(--hover-color);
+    }
+
+    >.avatar {
+        width : 26px;
+        height: 26px;
+    }
+
+    >.name {
+        font-size  : 14px;
+        font-weight: bold;
+    }
+
+    >.points {
+        border-left   : 1px solid var(--primary-color);
+        padding-left  : 8px;
+        font-size     : 12px;
+        text-transform: capitalize;
+        color         : var(--primary-color);
+    }
+}
