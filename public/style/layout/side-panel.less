@@ -11,12 +11,17 @@
         position        : absolute;
         right           : 0;
         top             : 0;
-        width           : 360px;
+        width           : 100%;
+        max-width       : 360px;
         height          : 100%;
         border-left     : 1px solid var(--line-color);
         background-color: var(--content-bg-color);
         overflow-y      : auto;
         padding-bottom  : 120px;
+
+        @container (width < @safe-width) {
+            width: 80%;
+        }
 
         >header {
             display      : flex;
@@ -51,24 +56,30 @@
             }
         }
 
-        >section {
-            border-bottom: 1px solid var(--line-color);
+        >main {
+            padding: 8px 0;
 
-            >header {
+            >section {
                 display        : flex;
                 align-items    : center;
                 justify-content: space-between;
-                padding        : 16px 20px;
+                padding        : 8px 20px;
 
                 >h3 {
                     color    : #595959;
                     font-size: 12px;
                 }
 
-                >button {
-                    padding: 4px 6px;
+                >.value {
+                    font-weight: bold;
+                    color      : var(--primary-color);
                 }
             }
+        }
+
+        >footer {
+            border-top: 1px solid var(--line-color);
+            padding   : 20px;
         }
     }
 }

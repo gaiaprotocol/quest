@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS "public"."quests" (
     "id" BIGINT NOT NULL,
     "title" TEXT NOT NULL,
-    "content" TEXT NOT NULL,
-    "point" BIGINT NOT NULL,
+    "description" TEXT NOT NULL,
+    "points" BIGINT NOT NULL,
     "participant_count" BIGINT NOT NULL,
     "created_at" timestamp with time zone DEFAULT now() NOT NULL,
     "updated_at" timestamp with time zone

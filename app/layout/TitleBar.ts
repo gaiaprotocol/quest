@@ -48,6 +48,6 @@ export default class TitleBar extends DomNode {
   }
 
   public changeTitle(uri: string) {
-    this.titleDisplay.text = msg(`title-${uri}`);
+    this.titleDisplay.text = uri;
   }
 }

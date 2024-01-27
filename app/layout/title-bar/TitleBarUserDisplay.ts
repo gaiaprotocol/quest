@@ -16,6 +16,7 @@ export default class TitleBarUserDisplay extends DomNode {
     this.append(
       avatar,
       el(".name", user.display_name),
+      el(".points", `${user.points} points`),
     );
 
     this.onDom("click", () => new SidePanel());

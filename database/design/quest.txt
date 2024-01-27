@@ -1,8 +1,8 @@
 quests
 	id - int8 - pk
     title - text - not null
-    content - text - not null
-    point - int8 - not null
+    description - text - not null
+    points - int8 - not null
     participant_count - int8 - not null
 	created_at - timestampz - now()
 	updated_at - timestampz - nullable
@@ -13,7 +13,7 @@ missions
     type - text - not null
     criteria - jsonb - {} - not null
     title - text - not null
-    content - text - not null
+    description - text - not null
 	created_at - timestampz - now()
 	updated_at - timestampz - nullable
 

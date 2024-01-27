@@ -69,6 +69,6 @@ export default class Layout extends View {
     );
 
     this.navBar.active(uri);
-    //this.titleBar.changeTitle(uri);
+    this.titleBar.changeTitle(uri);
   }
 }

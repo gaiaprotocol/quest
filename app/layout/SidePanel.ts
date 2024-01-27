@@ -4,12 +4,17 @@ import {
   Button,
   DomNode,
   el,
+  LoadingSpinner,
   MaterialIcon,
-  Router,
+  Store,
 } from "@common-module/app";
 import QuestSignedUserManager from "../user/QuestSignedUserManager.js";
+import QuestUserService from "../user/QuestUserService.js";
 
 export default class SidePanel extends DomNode {
+  private store = new Store("rank-store");
+  private rankDisplay: DomNode;
+
   constructor() {
     super(".side-panel");
 
@@ -43,13 +48,34 @@ export default class SidePanel extends DomNode {
           click: () => this.delete(),
         }),
       ),
-      new Button({
-        title: "Sign Out",
-        click: () => {
-          QuestSignedUserManager.signOut();
-          this.delete();
-        },
-      }),
+      el(
+        "main",
+        el(
+          "section.points",
+          el("h3", "Your Points"),
+          el(".value", String(QuestSignedUserManager.user?.points ?? 0)),
+        ),
+        el(
+          "section.rank",
+          el("h3", "Your Rank"),
+          this.rankDisplay = el(
+            ".value",
+            this.store.get("rank")
+              ? String(this.store.get("rank"))
+              : new LoadingSpinner(),
+          ),
+        ),
+      ),
+      el(
+        "footer",
+        new Button({
+          title: "Sign Out",
+          click: () => {
+            QuestSignedUserManager.signOut();
+            this.delete();
+          },
+        }),
+      ),
     ));
 
     this.onDom("click", (event: MouseEvent) => {
@@ -58,5 +84,15 @@ export default class SidePanel extends DomNode {
       }
     });
     BodyNode.append(this);
+
+    this.fetchRank();
+  }
+
+  async fetchRank() {
+    const rank = QuestSignedUserManager.user
+      ? await QuestUserService.fetchRank(QuestSignedUserManager.user.user_id)
+      : 0;
+    this.store.set("rank", rank);
+    this.rankDisplay.text = String(rank);
   }
 }

@@ -130,7 +130,7 @@ meter {
   --success-color: #00FF00;
   --popup-bg-color: rgba(0, 0, 0, 0.5);
   --button-bg-color: rgba(193, 168, 125, 0.12);
-  --hover-color: rgba(193, 168, 125, 0.12);
+  --hover-color: rgba(193, 168, 125, 0.2);
   --disable-color: rgba(255, 255, 255, 0.5);
   --loading-bar-bg-color: rgba(193, 168, 125, 0.1);
   --loading-bar-color: rgba(193, 168, 125, 0.5);
@@ -191,6 +191,9 @@ button.component.contained {
 }
 button.component > .title {
   text-transform: capitalize;
+}
+button.component:hover {
+  background-color: var(--hover-color);
 }
 .nav-bar.component {
   position: fixed;
@@ -960,6 +963,9 @@ button.component > .title {
     width: 100%;
   }
 }
+.title-bar > h1 {
+  text-transform: capitalize;
+}
 .title-bar > section.user {
   margin-left: auto;
   display: flex;
@@ -976,7 +982,7 @@ button.component > .title {
   cursor: pointer;
 }
 .title-bar-user-display:hover {
-  background-color: var(--primary-color);
+  background-color: var(--hover-color);
 }
 .title-bar-user-display > .avatar {
   width: 26px;
@@ -985,6 +991,13 @@ button.component > .title {
 .title-bar-user-display > .name {
   font-size: 14px;
   font-weight: bold;
+}
+.title-bar-user-display > .points {
+  border-left: 1px solid var(--primary-color);
+  padding-left: 8px;
+  font-size: 12px;
+  text-transform: capitalize;
+  color: var(--primary-color);
 }
 .side-panel {
   position: fixed;
@@ -999,12 +1012,18 @@ button.component > .title {
   position: absolute;
   right: 0;
   top: 0;
-  width: 360px;
+  width: 100%;
+  max-width: 360px;
   height: 100%;
   border-left: 1px solid var(--line-color);
   background-color: var(--content-bg-color);
   overflow-y: auto;
   padding-bottom: 120px;
+}
+@container (width < 1280px) {
+  .side-panel > main {
+    width: 80%;
+  }
 }
 .side-panel > main > header {
   display: flex;
@@ -1033,20 +1052,25 @@ button.component > .title {
   margin-left: auto;
   padding: 4px 6px;
 }
-.side-panel > main > section {
-  border-bottom: 1px solid var(--line-color);
+.side-panel > main > main {
+  padding: 8px 0;
 }
-.side-panel > main > section > header {
+.side-panel > main > main > section {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: 8px 20px;
 }
-.side-panel > main > section > header > h3 {
+.side-panel > main > main > section > h3 {
   color: #595959;
   font-size: 12px;
 }
-.side-panel > main > section > header > button {
-  padding: 4px 6px;
+.side-panel > main > main > section > .value {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+.side-panel > main > footer {
+  border-top: 1px solid var(--line-color);
+  padding: 20px;
 }
 
