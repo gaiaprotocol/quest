@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS "public"."users_public" (
     "stored_avatar_thumb" "text",
     "x_username" "text",
     "metadata" "jsonb",
+    "points" integer DEFAULT 0 NOT NULL,
     "blocked" boolean DEFAULT false NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone

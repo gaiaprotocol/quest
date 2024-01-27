@@ -9,6 +9,7 @@ users_public
 	stored_avatar_thumbnail - text - nullable
 	x_username - text - nullable
 	metadata - jsonb - nullable
+	points - int4 - 0
 	blocked - bool - false
 	created_at - timestampz - now()
 	updated_at - timestampz - nullable
