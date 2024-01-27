@@ -5,7 +5,6 @@ export default interface Config {
   supabaseAnonKey: string;
 
   walletConnectProjectId: string;
-  infuraKey: string;
 
   messageForWalletLinking: string;
 }
