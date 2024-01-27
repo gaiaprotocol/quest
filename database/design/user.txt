@@ -1,0 +1,20 @@
+users_public
+	user_id - uuid, fk to auth.user - auth.uid() - pk
+	wallet_address - text - nullable
+	display_name - text - nullable
+	avatar - text - nullable
+	avatar_thumbnail - text - nullable
+	avatar_stored - bool - false
+	stored_avatar - text - nullable
+	stored_avatar_thumbnail - text - nullable
+	x_username - text - nullable
+	metadata - jsonb - nullable
+	blocked - bool - false
+	created_at - timestampz - now()
+	updated_at - timestampz - nullable
+
+wallet_linking_nonces
+	user_id - uuid, fk to users_public.user_id - auth.uid() - pk
+	wallet_address - text - not null
+	nonce - uuid - gen_random_uuid()
+	created_at - timestampz - now()
