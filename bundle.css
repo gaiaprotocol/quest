@@ -1112,6 +1112,9 @@ button.component:hover {
   border-radius: 19px;
   padding: 5px 14px 5px 5px;
 }
+.leaderboard > tbody > tr > td > .user:hover {
+  background-color: var(--hover-color);
+}
 .leaderboard > tbody > tr > td > .user > .avatar {
   width: 26px;
   height: 26px;
