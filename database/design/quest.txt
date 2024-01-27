@@ -1,0 +1,28 @@
+quests
+	id - int8 - pk
+    title - text - not null
+    content - text - not null
+    point - int8 - not null
+    participant_count - int8 - not null
+	created_at - timestampz - now()
+	updated_at - timestampz - nullable
+
+missions
+	id - int8 - pk
+    quest_id - int8 - fk(quests.id) - not null
+    type - text - not null
+    criteria - jsonb - {} - not null
+    title - text - not null
+    content - text - not null
+	created_at - timestampz - now()
+	updated_at - timestampz - nullable
+
+mission_achievements
+    mission_id - int8 - fk(missions.id) - pk
+    user_id - uuid - fk(users_public.user_id) - pk
+    achieved_at - timestampz - now()
+
+quest_achievements
+    quest_id - int8 - fk(quests.id) - pk
+    user_id - uuid - fk(users_public.user_id) - pk
+    achieved_at - timestampz - now()
