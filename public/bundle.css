@@ -1078,9 +1078,20 @@ button.component:hover {
   max-width: 800px;
   margin: 30px auto;
 }
+@container (width < 1100px) {
+  .leaderboard-view > .leaderboard {
+    margin: 0;
+  }
+}
 .leaderboard {
   text-transform: capitalize;
   color: #ccc;
+}
+@container (width < 1100px) {
+  .leaderboard .x,
+  .leaderboard .discord {
+    display: none;
+  }
 }
 .leaderboard > thead > tr > th {
   border-bottom: 1px solid var(--line-color);
@@ -1106,6 +1117,9 @@ button.component:hover {
   border: 1px solid var(--line-color);
   border-radius: 19px;
   padding: 5px 14px 5px 5px;
+}
+.leaderboard > tbody > tr > td > .user:hover {
+  background-color: var(--hover-color);
 }
 .leaderboard > tbody > tr > td > .user > .avatar {
   width: 26px;

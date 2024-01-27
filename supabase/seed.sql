@@ -24,6 +24,21 @@ CREATE EXTENSION IF NOT EXISTS "supabase_vault" WITH SCHEMA "vault";
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
 
+CREATE OR REPLACE FUNCTION "public"."get_rank"("p_user_id" "uuid") RETURNS integer
+    LANGUAGE "plpgsql"
+    AS $$
+DECLARE
+    user_points integer;
+    rank integer;
+BEGIN
+    SELECT points INTO user_points FROM "public"."users_public" WHERE "user_id" = "p_user_id";
+    SELECT COUNT(*) INTO rank FROM "public"."users_public" WHERE points > user_points;
+    RETURN rank + 1;
+END;
+$$;
+
+ALTER FUNCTION "public"."get_rank"("p_user_id" "uuid") OWNER TO "postgres";
+
 CREATE OR REPLACE FUNCTION "public"."set_updated_at"() RETURNS "trigger"
     LANGUAGE "plpgsql" SECURITY DEFINER
     AS $$BEGIN
@@ -102,7 +117,7 @@ CREATE TABLE IF NOT EXISTS "public"."missions" (
     "type" "text" NOT NULL,
     "criteria" "jsonb" DEFAULT '{}'::"jsonb" NOT NULL,
     "title" "text" NOT NULL,
-    "content" "text" NOT NULL,
+    "description" "text" NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone
 );
@@ -120,8 +135,8 @@ ALTER TABLE "public"."quest_achievements" OWNER TO "postgres";
 CREATE TABLE IF NOT EXISTS "public"."quests" (
     "id" bigint NOT NULL,
     "title" "text" NOT NULL,
-    "content" "text" NOT NULL,
-    "point" bigint NOT NULL,
+    "description" "text" NOT NULL,
+    "points" bigint NOT NULL,
     "participant_count" bigint NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone
@@ -143,7 +158,8 @@ CREATE TABLE IF NOT EXISTS "public"."users_public" (
     "blocked" boolean DEFAULT false NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone,
-    "points" integer DEFAULT 0 NOT NULL
+    "points" integer DEFAULT 0 NOT NULL,
+    "discord_username" "text"
 );
 
 ALTER TABLE "public"."users_public" OWNER TO "postgres";
@@ -219,6 +235,10 @@ GRANT USAGE ON SCHEMA "public" TO "postgres";
 GRANT USAGE ON SCHEMA "public" TO "anon";
 GRANT USAGE ON SCHEMA "public" TO "authenticated";
 GRANT USAGE ON SCHEMA "public" TO "service_role";
+
+GRANT ALL ON FUNCTION "public"."get_rank"("p_user_id" "uuid") TO "anon";
+GRANT ALL ON FUNCTION "public"."get_rank"("p_user_id" "uuid") TO "authenticated";
+GRANT ALL ON FUNCTION "public"."get_rank"("p_user_id" "uuid") TO "service_role";
 
 GRANT ALL ON FUNCTION "public"."set_updated_at"() TO "anon";
 GRANT ALL ON FUNCTION "public"."set_updated_at"() TO "authenticated";
