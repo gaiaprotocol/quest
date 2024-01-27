@@ -9,6 +9,7 @@ import {
 import Config from "./Config.js";
 import Env from "./Env.js";
 import Layout from "./layout/Layout.js";
+import LeaderboardView from "./leaderboard/LeaderboardView.js";
 import QuestSignedUserManager from "./user/QuestSignedUserManager.js";
 import WalletManager from "./wallet/WalletManager.js";
 
@@ -32,6 +33,7 @@ export default async function initialize(config: Config) {
   );
 
   Router.route("**", Layout);
+  Router.route("leaderboard", LeaderboardView);
 
   AuthUtil.checkEmailAccess();
 }

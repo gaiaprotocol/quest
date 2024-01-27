@@ -28,6 +28,17 @@ class QuestUserService extends UserService<QuestUserPublic> {
     if (error) throw error;
     return data ?? 0;
   }
+
+  public async fetchLeaderboard() {
+    const data = await Supabase.safeFetch<QuestUserPublic[]>(
+      this.tableName,
+      (b) =>
+        b.select(this.selectQuery).order("points", { ascending: false }).limit(
+          100,
+        ),
+    );
+    return data ?? [];
+  }
 }
 
 export default new QuestUserService();

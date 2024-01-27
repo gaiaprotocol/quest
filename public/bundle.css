@@ -197,7 +197,7 @@ button.component:hover {
 }
 .nav-bar.component {
   position: fixed;
-  left: calc(50% - 1280px / 2);
+  left: calc(50% - 1100px / 2);
   top: 0;
   z-index: 999990;
   width: 90px;
@@ -211,7 +211,7 @@ button.component:hover {
   padding-bottom: 32px;
   overflow-y: auto;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .nav-bar.component {
     left: 0;
     top: auto;
@@ -235,7 +235,7 @@ button.component:hover {
 .nav-bar.component > h1.logo {
   padding: 21px 0;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .nav-bar.component > h1.logo {
     display: none;
   }
@@ -394,7 +394,7 @@ button.component:hover {
   z-index: 999998;
   width: 100%;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .snackbar.component {
     bottom: calc(110px + env(safe-area-inset-bottom));
   }
@@ -574,7 +574,7 @@ button.component:hover {
   background-color: #252527;
   background-size: cover;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .avatar {
     width: 34px;
     height: 34px;
@@ -599,7 +599,7 @@ button.component:hover {
   background-size: cover;
   cursor: pointer;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .post-display.social-component .author-avatar {
     width: 34px;
     height: 34px;
@@ -684,7 +684,7 @@ button.component:hover {
   background-size: cover;
   cursor: pointer;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .post-content-display.social-component .author-avatar {
     width: 34px;
     height: 34px;
@@ -726,7 +726,7 @@ button.component:hover {
   background-color: #252527;
   background-size: cover;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .post-form.social-component > main > .author-avatar {
     width: 34px;
     height: 34px;
@@ -796,7 +796,7 @@ button.component:hover {
   height: 34px;
   cursor: pointer;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .chat-message-list-item > .author-avatar {
     width: 34px;
     height: 34px;
@@ -920,7 +920,7 @@ button.component:hover {
   height: 100%;
 }
 .layout > main {
-  width: 1280px;
+  width: 1100px;
   margin: 0 auto;
   padding-top: 56px;
   padding-left: 90px;
@@ -929,7 +929,7 @@ button.component:hover {
   background-color: var(--content-bg-color);
   border-right: 1px solid var(--line-color);
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .layout > main {
     width: 100%;
     padding-left: 0;
@@ -944,10 +944,10 @@ button.component:hover {
 }
 .title-bar {
   position: fixed;
-  left: calc(50% - 1280px / 2 + 90px);
+  left: calc(50% - 1100px / 2 + 90px);
   top: 0;
   z-index: 1;
-  width: calc(1280px - 90px - 1px);
+  width: calc(1100px - 90px - 1px);
   height: 56px;
   background-color: var(--content-bg-color);
   border-bottom: 1px solid var(--line-color);
@@ -957,7 +957,7 @@ button.component:hover {
   align-items: center;
   padding: 0 20px;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .title-bar {
     left: 0;
     width: 100%;
@@ -1020,7 +1020,7 @@ button.component:hover {
   overflow-y: auto;
   padding-bottom: 120px;
 }
-@container (width < 1280px) {
+@container (width < 1100px) {
   .side-panel > main {
     width: 80%;
   }
@@ -1072,5 +1072,47 @@ button.component:hover {
 .side-panel > main > footer {
   border-top: 1px solid var(--line-color);
   padding: 20px;
+}
+.leaderboard-view > .leaderboard {
+  width: 100%;
+  max-width: 800px;
+  margin: 30px auto;
+}
+.leaderboard {
+  text-transform: capitalize;
+  color: #ccc;
+}
+.leaderboard > thead > tr > th {
+  border-bottom: 1px solid var(--line-color);
+  padding: 12px;
+  font-weight: bold;
+  color: #fff;
+}
+.leaderboard > tbody:empty::before {
+  display: block;
+  content: attr(data-empty-message);
+  color: var(--disable-color);
+  padding: 8px 12px;
+}
+.leaderboard > tbody > tr > td {
+  border-bottom: 1px solid var(--line-color);
+  padding: 8px 12px;
+  vertical-align: middle;
+}
+.leaderboard > tbody > tr > td > .user {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line-color);
+  border-radius: 19px;
+  padding: 5px 14px 5px 5px;
+}
+.leaderboard > tbody > tr > td > .user > .avatar {
+  width: 26px;
+  height: 26px;
+}
+.leaderboard > tbody > tr > td.points {
+  font-weight: bold;
+  color: var(--primary-color);
 }
 

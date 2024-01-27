@@ -1,0 +1,51 @@
+.leaderboard {
+    text-transform: capitalize;
+    color         : #ccc;
+
+    >thead {
+        >tr {
+            >th {
+                border-bottom: 1px solid var(--line-color);
+                padding      : 12px;
+                font-weight  : bold;
+                color        : #fff;
+            }
+        }
+    }
+
+    >tbody {
+        &:empty::before {
+            display: block;
+            content: attr(data-empty-message);
+            color  : var(--disable-color);
+            padding: 8px 12px;
+        }
+
+        >tr {
+            >td {
+                border-bottom : 1px solid var(--line-color);
+                padding       : 8px 12px;
+                vertical-align: middle;
+
+                >.user {
+                    display      : inline-flex;
+                    align-items  : center;
+                    gap          : 10px;
+                    border       : 1px solid var(--line-color);
+                    border-radius: 19px;
+                    padding      : 5px 14px 5px 5px;
+
+                    >.avatar {
+                        width : 26px;
+                        height: 26px;
+                    }
+                }
+
+                &.points {
+                    font-weight: bold;
+                    color      : var(--primary-color);
+                }
+            }
+        }
+    }
+}

@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS "public"."users_public" (
     "stored_avatar" "text",
     "stored_avatar_thumb" "text",
     "x_username" "text",
+    "discord_username" "text",
     "metadata" "jsonb",
     "points" integer DEFAULT 0 NOT NULL,
     "blocked" boolean DEFAULT false NOT NULL,
