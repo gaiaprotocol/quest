@@ -1,0 +1,88 @@
+.quest-view {
+    max-width     : 800px;
+    margin        : 30px auto;
+    padding-bottom: 120px;
+
+    @container (width < @safe-width) {
+        margin        : 0;
+        padding       : 20px;
+        padding-bottom: 120px;
+    }
+
+    >.quest-info {
+        >header {
+            display    : flex;
+            align-items: center;
+
+            @container (width < @safe-width) {
+                flex-direction: column;
+                gap           : 16px;
+                align-items   : flex-start;
+            }
+
+            >h1 {
+                flex-grow  : 1;
+                font-family: 'Mona-Sans-ExtraBoldWide';
+                font-size  : 28px;
+                line-height: 1.5em;
+
+                @container (width < @safe-width) {
+                    font-size: 20px;
+                }
+            }
+
+            >.achieved {
+                border        : 1px solid var(--success-color);
+                color         : var(--success-color);
+                padding       : 8px 12px;
+                border-radius : 16px;
+                text-transform: capitalize;
+            }
+
+            >.not-achieved {
+                border        : 1px solid var(--primary-color);
+                color         : var(--primary-color);
+                padding       : 8px 12px;
+                border-radius : 16px;
+                text-transform: capitalize;
+            }
+        }
+
+        >p {
+            margin-top: 18px;
+            color     : #ccc;
+
+            @container (width < @safe-width) {
+                font-size: 12px;
+            }
+        }
+
+        >.details {
+            margin-top: 18px;
+            color     : #ccc;
+            display   : flex;
+
+            @container (width < @safe-width) {
+                font-size     : 12px;
+                flex-direction: column;
+                gap           : 16px;
+            }
+
+            >.duration {
+                border-left : 1px solid #ccc;
+                margin-left : 18px;
+                padding-left: 18px;
+
+                @container (width < @safe-width) {
+                    border-left : none;
+                    margin-left : 0;
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+
+    >.mission-container {
+        margin-top: 30px;
+    }
+}

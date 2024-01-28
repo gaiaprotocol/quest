@@ -1,4 +1,4 @@
-enum MissionType {
+export enum MissionType {
   FOLLOW_X = "follow_x",
   JOIN_DISCORD = "join_discord",
 }
@@ -6,7 +6,11 @@ enum MissionType {
 export default interface Mission {
   quest_id: number;
   type: MissionType;
-  criteria: {};
+  criteria: {
+    target_x_username?: string;
+    target_discord_url?: string;
+    target_discord_guild_id?: string;
+  };
   title: string;
   description: string;
   created_at: string;
