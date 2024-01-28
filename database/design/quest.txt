@@ -23,9 +23,11 @@ missions
 mission_achievements
     mission_id - int8 - fk(missions.id) - pk
     user_id - uuid - fk(users_public.user_id) - pk
+    wallet_address - text - nullable
     achieved_at - timestampz - now()
 
 quest_achievements
     quest_id - int8 - fk(quests.id) - pk
     user_id - uuid - fk(users_public.user_id) - pk
+    wallet_address - text - nullable
     achieved_at - timestampz - now()

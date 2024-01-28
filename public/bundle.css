@@ -1040,17 +1040,8 @@ button.component:hover {
   gap: 12px;
   align-items: center;
 }
-.side-panel > main > header > .signed-user > .info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.side-panel > main > header > .signed-user > .info > .name {
+.side-panel > main > header > .signed-user > .name {
   font-weight: bold;
-}
-.side-panel > main > header > .signed-user > .info > .x-username {
-  color: #595959;
-  font-size: 12px;
 }
 .side-panel > main > header > button.close {
   margin-left: auto;

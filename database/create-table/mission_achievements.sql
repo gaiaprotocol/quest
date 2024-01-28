@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS "public"."mission_achievements" (
     "mission_id" int8 NOT NULL,
     "user_id" uuid NOT NULL,
+    "wallet_address" text,
     "achieved_at" timestamp with time zone DEFAULT now() NOT NULL,
     PRIMARY KEY ("mission_id", "user_id")
 );

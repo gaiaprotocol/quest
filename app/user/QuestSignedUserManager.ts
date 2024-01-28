@@ -1,11 +1,12 @@
-import { EventContainer, Supabase } from "@common-module/app";
-import Env from "../Env.js";
+import { Confirm, EventContainer, msg, Supabase } from "@common-module/app";
 import QuestUserPublic from "../database-interface/QuestUserPublic.js";
+import Env from "../Env.js";
 import WalletManager from "../wallet/WalletManager.js";
 import QuestUserService from "./QuestUserService.js";
 
 class QuestSignedUserManager extends EventContainer {
   public user: QuestUserPublic | undefined;
+  public signedUserEmail: string | undefined;
 
   constructor() {
     super();
@@ -16,8 +17,10 @@ class QuestSignedUserManager extends EventContainer {
     const { data, error } = await Supabase.client.auth.getSession();
     if (error) throw error;
     const sessionUser = data?.session?.user;
+    console.log(sessionUser);
     if (sessionUser) {
       this.user = await QuestUserService.fetchUser(sessionUser.id);
+      this.signedUserEmail = sessionUser.email;
     }
   }
 
@@ -29,12 +32,8 @@ class QuestSignedUserManager extends EventContainer {
     return this.user?.wallet_address !== undefined;
   }
 
-  public async signIn() {
-    await Supabase.signIn("twitter");
-  }
-
-  public async linkDiscord() {
-    await Supabase.signIn("discord");
+  public async signIn(provider: "x" | "discord") {
+    await Supabase.signIn(provider === "x" ? "twitter" : provider);
   }
 
   public async linkWallet() {
@@ -64,6 +63,26 @@ class QuestSignedUserManager extends EventContainer {
       this.user.wallet_address = walletAddress;
       this.fireEvent("walletLinked");
     }
+  }
+
+  public linkDiscordToX() {
+    new Confirm({
+      title: msg("account-linking-guide-popup-title"),
+      message: msg("account-linking-guide-discord-to-x", {
+        email: this.signedUserEmail,
+      }),
+      confirmTitle: msg("account-linking-guide-x-login-button"),
+    }, () => this.signIn("x"));
+  }
+
+  public linkXToDiscord() {
+    new Confirm({
+      title: msg("account-linking-guide-popup-title"),
+      message: msg("account-linking-guide-x-to-discord", {
+        email: this.signedUserEmail,
+      }),
+      confirmTitle: msg("account-linking-guide-discord-login-button"),
+    }, () => this.signIn("discord"));
   }
 
   public async signOut() {

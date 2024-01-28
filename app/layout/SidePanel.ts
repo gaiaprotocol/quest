@@ -4,6 +4,7 @@ import {
   Button,
   DomNode,
   el,
+  ErrorAlert,
   LoadingSpinner,
   MaterialIcon,
   Store,
@@ -36,11 +37,7 @@ export default class SidePanel extends DomNode {
           ? el(
             ".signed-user",
             avatar,
-            el(
-              ".info",
-              el(".name", QuestSignedUserManager.user.display_name),
-              el(".x-username", `@${QuestSignedUserManager.user.x_username}`),
-            ),
+            el(".name", QuestSignedUserManager.user.display_name),
           )
           : undefined,
         new Button({
@@ -52,13 +49,23 @@ export default class SidePanel extends DomNode {
       el(
         "main",
         el(
+          "section.x",
+          el("h3", "𝕏"),
+          QuestSignedUserManager.user?.x_username
+            ? el(".value", QuestSignedUserManager.user.x_username)
+            : new Button({
+              title: "Link 𝕏 Account",
+              click: () => QuestSignedUserManager.linkDiscordToX(),
+            }),
+        ),
+        el(
           "section.discord",
           el("h3", "Discord"),
           QuestSignedUserManager.user?.discord_username
             ? el(".value", QuestSignedUserManager.user.discord_username)
             : new Button({
-              title: "Link Discord",
-              click: () => QuestSignedUserManager.linkDiscord(),
+              title: "Link Discord Account",
+              click: () => QuestSignedUserManager.linkXToDiscord(),
             }),
         ),
         el(
@@ -78,7 +85,20 @@ export default class SidePanel extends DomNode {
             )
             : new Button({
               title: "Link Wallet",
-              click: () => QuestSignedUserManager.linkWallet(),
+              click: async (event, button) => {
+                button.loading = true;
+                try {
+                  await QuestSignedUserManager.linkWallet();
+                } catch (error: any) {
+                  console.error(error);
+                  new ErrorAlert({
+                    title: "Failed to link wallet",
+                    message: error.message,
+                  });
+                }
+                button.loading = false;
+                this.delete();
+              },
             }),
         ),
       ),
