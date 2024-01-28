@@ -1161,6 +1161,9 @@ button.component:hover {
   }
 }
 .quest-view > .quest-info > header > h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   flex-grow: 1;
   font-family: 'Mona-Sans-ExtraBoldWide';
   font-size: 28px;
@@ -1169,7 +1172,17 @@ button.component:hover {
 @container (width < 1100px) {
   .quest-view > .quest-info > header > h1 {
     font-size: 20px;
+    flex-direction: column;
+    align-items: flex-start;
   }
+}
+.quest-view > .quest-info > header > h1 > .image {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .quest-view > .quest-info > header > .achieved {
   border: 1px solid var(--success-color);
@@ -1198,20 +1211,38 @@ button.component:hover {
   margin-top: 18px;
   color: #ccc;
   display: flex;
+  align-items: center;
 }
 @container (width < 1100px) {
   .quest-view > .quest-info > .details {
     font-size: 12px;
     flex-direction: column;
     gap: 16px;
+    align-items: flex-start;
   }
 }
-.quest-view > .quest-info > .details > .duration {
-  border-left: 1px solid #ccc;
-  margin-left: 18px;
-  padding-left: 18px;
+.quest-view > .quest-info > .details > .points {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  background-color: var(--content-bg-color);
+  color: var(--primary-color);
+  border-radius: 12px;
+  text-transform: capitalize;
 }
 @container (width < 1100px) {
+  .quest-view > .quest-info > .details > .points {
+    font-size: 12px;
+  }
+}
+.quest-view > .quest-info > .details > .participant-count,
+.quest-view > .quest-info > .details > .duration {
+  border-left: 1px solid #666;
+  margin-left: 16px;
+  padding-left: 16px;
+}
+@container (width < 1100px) {
+  .quest-view > .quest-info > .details > .participant-count,
   .quest-view > .quest-info > .details > .duration {
     border-left: none;
     margin-left: 0;
@@ -1230,12 +1261,44 @@ button.component:hover {
   background-color: var(--panel-bg-color);
   padding: 20px;
   border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+@container (width < 1100px) {
+  .quest-list-item {
+    padding: 16px;
+  }
+}
+.quest-list-item > .points {
+  display: none;
+  gap: 4px;
+  align-items: center;
+  background-color: var(--content-bg-color);
+  color: var(--primary-color);
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: capitalize;
+  font-size: 12px;
+}
+@container (width < 1100px) {
+  .quest-list-item > .points {
+    display: flex;
+  }
+}
+.quest-list-item > main {
   display: flex;
   gap: 20px;
   align-items: center;
-  cursor: pointer;
 }
-.quest-list-item > .image {
+@container (width < 1100px) {
+  .quest-list-item > main {
+    gap: 16px;
+  }
+}
+.quest-list-item > main > .image {
   width: 140px;
   height: 160px;
   border-radius: 8px;
@@ -1243,13 +1306,24 @@ button.component:hover {
   background-repeat: no-repeat;
   background-position: center;
 }
-.quest-list-item > main {
+@container (width < 1100px) {
+  .quest-list-item > main > .image {
+    width: 100px;
+    height: 132px;
+  }
+}
+.quest-list-item > main > .content {
   display: flex;
   flex-direction: column;
   gap: 16px;
   align-items: flex-start;
 }
-.quest-list-item > main > .points {
+@container (width < 1100px) {
+  .quest-list-item > main > .content {
+    gap: 12px;
+  }
+}
+.quest-list-item > main > .content > .points {
   display: flex;
   gap: 4px;
   align-items: center;
@@ -1260,29 +1334,30 @@ button.component:hover {
   text-transform: capitalize;
 }
 @container (width < 1100px) {
-  .quest-list-item > main > .points {
-    font-size: 12px;
+  .quest-list-item > main > .content > .points {
+    display: none;
   }
 }
-.quest-list-item > main > .title {
+.quest-list-item > main > .content > .title {
   font-family: 'Mona-Sans-ExtraBoldWide';
   font-size: 18px;
   line-height: 1.5em;
 }
 @container (width < 1100px) {
-  .quest-list-item > main > .title {
+  .quest-list-item > main > .content > .title {
     font-size: 14px;
   }
 }
-.quest-list-item > main > .details {
+.quest-list-item > main > .content > .details {
   font-size: 12px;
   color: var(--disable-color);
   display: flex;
   gap: 16px;
 }
 @container (width < 1100px) {
-  .quest-list-item > main > .details {
+  .quest-list-item > main > .content > .details {
     flex-direction: column;
+    gap: 12px;
   }
 }
 .mission-list {
@@ -1299,7 +1374,14 @@ button.component:hover {
   display: flex;
   align-items: flex-start;
 }
+@container (width < 1100px) {
+  .mission-list-item > header {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
 .mission-list-item > header > h2 {
+  flex-grow: 1;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1307,7 +1389,6 @@ button.component:hover {
   font-size: 16px;
 }
 .mission-list-item > header > button {
-  margin-left: auto;
   height: 32px;
 }
 .mission-list-item > p {

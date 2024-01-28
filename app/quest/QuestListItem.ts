@@ -21,25 +21,29 @@ export default class QuestListItem extends DomNode {
     const durationText = `${formattedStartDate} - ${formattedEndDate}`;
 
     this.append(
-      el(".image", {
-        style: {
-          backgroundImage: `url(${quest.image})`,
-        },
-      }),
+      el(".points", new MaterialIcon("verified"), `${quest.points} points`),
       el(
         "main",
-        el(".points", new MaterialIcon("verified"), `${quest.points} points`),
-        el(".title", quest.title),
-        el(
-          ".details",
-          el(".duration", durationText),
-          el(".participant-count", `${quest.participant_count} participants`),
-        ),
-        new Button({
-          title: quest.is_achieved ? "Archived" : "Join",
-          disabled: quest.is_achieved,
-          icon: new MaterialIcon(quest.is_achieved ? "check" : "login"),
+        el(".image", {
+          style: {
+            backgroundImage: `url(${quest.image})`,
+          },
         }),
+        el(
+          ".content",
+          el(".points", new MaterialIcon("verified"), `${quest.points} points`),
+          el(".title", quest.title),
+          el(
+            ".details",
+            el(".duration", durationText),
+            el(".participant-count", `${quest.participant_count} participants`),
+          ),
+          new Button({
+            title: quest.is_achieved ? "Archived" : "Join",
+            disabled: quest.is_achieved,
+            icon: new MaterialIcon(quest.is_achieved ? "check" : "login"),
+          }),
+        ),
       ),
     );
 

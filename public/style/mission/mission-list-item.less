@@ -7,7 +7,13 @@
         display    : flex;
         align-items: flex-start;
 
+        @container (width < @safe-width) {
+            flex-direction: column;
+            gap           : 12px;
+        }
+
         >h2 {
+            flex-grow  : 1;
             display    : flex;
             align-items: center;
             gap        : 8px;
@@ -16,8 +22,7 @@
         }
 
         >button {
-            margin-left: auto;
-            height     : 32px;
+            height: 32px;
         }
     }
 

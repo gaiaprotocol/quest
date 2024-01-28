@@ -1,4 +1,11 @@
-import { DateUtil, DomNode, el, View, ViewParams } from "@common-module/app";
+import {
+  DateUtil,
+  DomNode,
+  el,
+  MaterialIcon,
+  View,
+  ViewParams,
+} from "@common-module/app";
 import Quest from "../database-interface/Quest.js";
 import Layout from "../layout/Layout.js";
 import MissionList from "../mission/MissionList.js";
@@ -53,7 +60,15 @@ export default class QuestView extends View {
     this.questInfo.empty().append(
       el(
         "header",
-        el("h1", quest.title),
+        el(
+          "h1",
+          el(".image", {
+            style: {
+              backgroundImage: `url(${quest.image})`,
+            },
+          }),
+          quest.title,
+        ),
         quest.is_achieved
           ? el(".achieved", "Achieved!")
           : el(".not-achieved", "Not achieved"),
@@ -61,6 +76,7 @@ export default class QuestView extends View {
       el("p", quest.description),
       el(
         ".details",
+        el(".points", new MaterialIcon("verified"), `${quest.points} points`),
         el(".participant-count", `${quest.participant_count} participants`),
         el(".duration", durationText),
       ),

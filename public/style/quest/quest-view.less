@@ -21,13 +21,27 @@
             }
 
             >h1 {
+                display    : flex;
+                align-items: center;
+                gap        : 12px;
                 flex-grow  : 1;
                 font-family: 'Mona-Sans-ExtraBoldWide';
                 font-size  : 28px;
                 line-height: 1.5em;
 
                 @container (width < @safe-width) {
-                    font-size: 20px;
+                    font-size     : 20px;
+                    flex-direction: column;
+                    align-items   : flex-start;
+                }
+
+                >.image {
+                    width              : 40px;
+                    height             : 40px;
+                    border-radius      : 4px;
+                    background-size    : cover;
+                    background-repeat  : no-repeat;
+                    background-position: center;
                 }
             }
 
@@ -58,20 +72,37 @@
         }
 
         >.details {
-            margin-top: 18px;
-            color     : #ccc;
-            display   : flex;
+            margin-top : 18px;
+            color      : #ccc;
+            display    : flex;
+            align-items: center;
 
             @container (width < @safe-width) {
                 font-size     : 12px;
                 flex-direction: column;
                 gap           : 16px;
+                align-items   : flex-start;
             }
 
+            >.points {
+                display         : flex;
+                gap             : 4px;
+                align-items     : center;
+                background-color: var(--content-bg-color);
+                color           : var(--primary-color);
+                border-radius   : 12px;
+                text-transform  : capitalize;
+
+                @container (width < @safe-width) {
+                    font-size: 12px;
+                }
+            }
+
+            >.participant-count,
             >.duration {
-                border-left : 1px solid #ccc;
-                margin-left : 18px;
-                padding-left: 18px;
+                border-left : 1px solid #666;
+                margin-left : 16px;
+                padding-left: 16px;
 
                 @container (width < @safe-width) {
                     border-left : none;
