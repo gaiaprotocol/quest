@@ -1,6 +1,7 @@
 import { Button, DomNode, el, MaterialIcon } from "@common-module/app";
 import Mission, { MissionType } from "../database-interface/Mission.js";
 import QuestSignedUserManager from "../user/QuestSignedUserManager.js";
+import MissionService from "./MissionService.js";
 
 export default class MissionListItem extends DomNode {
   constructor(mission: Mission) {
@@ -15,6 +16,11 @@ export default class MissionListItem extends DomNode {
           icon: new MaterialIcon("person_add"),
           title: "Follow",
           href: `https://x.com/${mission.criteria.target_x_username}`,
+          click: () =>
+            MissionService.followX(
+              mission.id,
+              mission.criteria.target_x_username!,
+            ),
         })
         : new Button({
           title: "Sign in with 𝕏",

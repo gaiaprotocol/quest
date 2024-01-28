@@ -4,6 +4,7 @@ export enum MissionType {
 }
 
 export default interface Mission {
+  id: number;
   quest_id: number;
   type: MissionType;
   criteria: {

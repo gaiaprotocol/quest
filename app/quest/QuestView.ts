@@ -9,6 +9,7 @@ import {
 import Quest from "../database-interface/Quest.js";
 import Layout from "../layout/Layout.js";
 import MissionList from "../mission/MissionList.js";
+import QuestSignedUserManager from "../user/QuestSignedUserManager.js";
 import QuestService from "./QuestService.js";
 
 export default class QuestView extends View {
@@ -44,7 +45,10 @@ export default class QuestView extends View {
   }
 
   private async fetchQuest(questId: number) {
-    const quest = await QuestService.fetchQuest(questId);
+    const quest = await QuestService.fetchQuest(
+      questId,
+      QuestSignedUserManager.user?.user_id,
+    );
     if (quest) this.renderQuest(quest);
   }
 

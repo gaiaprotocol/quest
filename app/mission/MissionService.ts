@@ -23,6 +23,14 @@ class MissionService extends SupabaseService<Mission> {
     if (error) throw error;
     return Supabase.safeResult<Mission[]>(data ?? []);
   }
+
+  public async followX(missionId: number, targetXUsername: string) {
+    const { error } = await Supabase.client.functions.invoke(
+      "follow-x",
+      { body: { missionId, targetXUsername } },
+    );
+    if (error) throw error;
+  }
 }
 
 export default new MissionService();
