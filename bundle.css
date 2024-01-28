@@ -1137,6 +1137,90 @@ button.component:hover {
     padding: 20px;
   }
 }
+.quest-view {
+  max-width: 800px;
+  margin: 30px auto;
+  padding-bottom: 120px;
+}
+@container (width < 1100px) {
+  .quest-view {
+    margin: 0;
+    padding: 20px;
+    padding-bottom: 120px;
+  }
+}
+.quest-view > .quest-info > header {
+  display: flex;
+  align-items: center;
+}
+@container (width < 1100px) {
+  .quest-view > .quest-info > header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+}
+.quest-view > .quest-info > header > h1 {
+  flex-grow: 1;
+  font-family: 'Mona-Sans-ExtraBoldWide';
+  font-size: 28px;
+  line-height: 1.5em;
+}
+@container (width < 1100px) {
+  .quest-view > .quest-info > header > h1 {
+    font-size: 20px;
+  }
+}
+.quest-view > .quest-info > header > .achieved {
+  border: 1px solid var(--success-color);
+  color: var(--success-color);
+  padding: 8px 12px;
+  border-radius: 16px;
+  text-transform: capitalize;
+}
+.quest-view > .quest-info > header > .not-achieved {
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 8px 12px;
+  border-radius: 16px;
+  text-transform: capitalize;
+}
+.quest-view > .quest-info > p {
+  margin-top: 18px;
+  color: #ccc;
+}
+@container (width < 1100px) {
+  .quest-view > .quest-info > p {
+    font-size: 12px;
+  }
+}
+.quest-view > .quest-info > .details {
+  margin-top: 18px;
+  color: #ccc;
+  display: flex;
+}
+@container (width < 1100px) {
+  .quest-view > .quest-info > .details {
+    font-size: 12px;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+.quest-view > .quest-info > .details > .duration {
+  border-left: 1px solid #ccc;
+  margin-left: 18px;
+  padding-left: 18px;
+}
+@container (width < 1100px) {
+  .quest-view > .quest-info > .details > .duration {
+    border-left: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+.quest-view > .mission-container {
+  margin-top: 30px;
+}
 .quest-list {
   display: flex;
   flex-direction: column;
@@ -1200,5 +1284,34 @@ button.component:hover {
   .quest-list-item > main > .details {
     flex-direction: column;
   }
+}
+.mission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mission-list-item {
+  background-color: var(--panel-bg-color);
+  padding: 20px;
+  border-radius: 12px;
+}
+.mission-list-item > header {
+  display: flex;
+  align-items: flex-start;
+}
+.mission-list-item > header > h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.mission-list-item > header > button {
+  margin-left: auto;
+  height: 32px;
+}
+.mission-list-item > p {
+  margin-top: 12px;
+  color: #ccc;
 }
 
