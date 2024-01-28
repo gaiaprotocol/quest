@@ -74,7 +74,7 @@ export default class QuestView extends View {
           quest.title,
         ),
         quest.is_achieved
-          ? el(".achieved", "Achieved!")
+          ? el(".achieved", new MaterialIcon("check"), "Achieved!")
           : el(".not-achieved", "Not achieved"),
       ),
       el("p", quest.description),

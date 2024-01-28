@@ -14,6 +14,8 @@ ALTER TABLE "public"."mission_achievements"
 
 ALTER TABLE "public"."mission_achievements" ENABLE ROW LEVEL SECURITY;
 
+CREATE POLICY "view everyone" ON "public"."mission_achievements" FOR SELECT USING (true);
+
 GRANT ALL ON TABLE "public"."mission_achievements" TO "anon";
 GRANT ALL ON TABLE "public"."mission_achievements" TO "authenticated";
 GRANT ALL ON TABLE "public"."mission_achievements" TO "service_role";
