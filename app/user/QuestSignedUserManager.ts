@@ -33,6 +33,10 @@ class QuestSignedUserManager extends EventContainer {
     await Supabase.signIn("twitter");
   }
 
+  public async linkDiscord() {
+    await Supabase.signIn("discord");
+  }
+
   public async linkWallet() {
     if (!WalletManager.connected) await WalletManager.connect();
 

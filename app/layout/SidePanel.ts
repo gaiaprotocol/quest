@@ -7,6 +7,7 @@ import {
   LoadingSpinner,
   MaterialIcon,
   Store,
+  StringUtil,
 } from "@common-module/app";
 import QuestSignedUserManager from "../user/QuestSignedUserManager.js";
 import QuestUserService from "../user/QuestUserService.js";
@@ -47,6 +48,39 @@ export default class SidePanel extends DomNode {
           icon: new MaterialIcon("close"),
           click: () => this.delete(),
         }),
+      ),
+      el(
+        "main",
+        el(
+          "section.discord",
+          el("h3", "Discord"),
+          QuestSignedUserManager.user?.discord_username
+            ? el(".value", QuestSignedUserManager.user.discord_username)
+            : new Button({
+              title: "Link Discord",
+              click: () => QuestSignedUserManager.linkDiscord(),
+            }),
+        ),
+        el(
+          "section.wallet-address",
+          el("h3", "Wallet Address"),
+          QuestSignedUserManager.user?.wallet_address
+            ? el(
+              "a.value",
+              StringUtil.shortenEthereumAddress(
+                QuestSignedUserManager.user.wallet_address,
+              ),
+              {
+                href:
+                  `https://etherscan.io/address/${QuestSignedUserManager.user.wallet_address}`,
+                target: "_blank",
+              },
+            )
+            : new Button({
+              title: "Link Wallet",
+              click: () => QuestSignedUserManager.linkWallet(),
+            }),
+        ),
       ),
       el(
         "main",

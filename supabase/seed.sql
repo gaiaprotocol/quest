@@ -24,7 +24,36 @@ CREATE EXTENSION IF NOT EXISTS "supabase_vault" WITH SCHEMA "vault";
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
 
-CREATE OR REPLACE FUNCTION "public"."get_quests"("p_user_id" "uuid" DEFAULT NULL::"uuid", "last_created_at" timestamp with time zone DEFAULT NULL::timestamp with time zone, "max_count" integer DEFAULT 50) RETURNS TABLE("id" bigint, "title" "text", "description" "text", "points" bigint, "participant_count" bigint, "start_date" timestamp with time zone, "end_date" timestamp with time zone, "created_at" timestamp with time zone, "updated_at" timestamp with time zone, "is_achieved" boolean)
+CREATE OR REPLACE FUNCTION "public"."get_missions"("p_quest_id" bigint, "p_user_id" "uuid" DEFAULT NULL::"uuid", "last_created_at" timestamp with time zone DEFAULT NULL::timestamp with time zone, "max_count" integer DEFAULT 50) RETURNS TABLE("id" bigint, "quest_id" bigint, "type" "text", "criteria" "jsonb", "title" "text", "description" "text", "created_at" timestamp with time zone, "updated_at" timestamp with time zone, "is_achieved" boolean)
+    LANGUAGE "plpgsql"
+    AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        m.id,
+        m.quest_id,
+        m.type,
+        m.criteria,
+        m.title,
+        m.description,
+        m.created_at,
+        m.updated_at,
+        EXISTS (SELECT 1 FROM mission_achievements ma WHERE ma.mission_id = m.id AND ma.user_id = p_user_id) AS is_achieved
+    FROM 
+        missions m
+    WHERE 
+        m.quest_id = p_quest_id
+        AND (last_created_at IS NULL OR m.created_at < last_created_at)
+    ORDER BY 
+        m.id ASC
+    LIMIT 
+        max_count;
+END;
+$$;
+
+ALTER FUNCTION "public"."get_missions"("p_quest_id" bigint, "p_user_id" "uuid", "last_created_at" timestamp with time zone, "max_count" integer) OWNER TO "postgres";
+
+CREATE OR REPLACE FUNCTION "public"."get_quests"("p_user_id" "uuid" DEFAULT NULL::"uuid", "last_created_at" timestamp with time zone DEFAULT NULL::timestamp with time zone, "max_count" integer DEFAULT 50) RETURNS TABLE("id" bigint, "title" "text", "description" "text", "image" "text", "points" bigint, "participant_count" bigint, "start_date" timestamp with time zone, "end_date" timestamp with time zone, "created_at" timestamp with time zone, "updated_at" timestamp with time zone, "is_achieved" boolean)
     LANGUAGE "plpgsql"
     AS $$
 BEGIN
@@ -33,6 +62,7 @@ BEGIN
         q.id,
         q.title,
         q.description,
+        q.image,
         q.points,
         q.participant_count,
         q.start_date,
@@ -45,7 +75,7 @@ BEGIN
     WHERE 
         (last_created_at IS NULL OR q.created_at < last_created_at)
     ORDER BY 
-        q.created_at DESC
+        q.id DESC
     LIMIT 
         max_count;
 END;
@@ -108,6 +138,23 @@ begin
       avatar_thumb = new.raw_user_meta_data ->> 'avatar_url',
       avatar_stored = false,
       x_username = new.raw_user_meta_data ->> 'user_name';
+  elsif strpos(new.raw_user_meta_data ->> 'iss', 'discord') > 0 then
+    insert into public.users_public (user_id, display_name, avatar, avatar_thumb, avatar_stored, discord_username, discord_user_id)
+    values (
+      new.id,
+      new.raw_user_meta_data ->> 'full_name',
+      new.raw_user_meta_data ->> 'avatar_url',
+      new.raw_user_meta_data ->> 'full_name',
+      new.raw_user_meta_data ->> 'id',
+      false
+    ) on conflict (user_id) do update
+    set
+      display_name = new.raw_user_meta_data ->> 'full_name',
+      avatar = new.raw_user_meta_data ->> 'avatar_url',
+      avatar_thumb = new.raw_user_meta_data ->> 'avatar_url',
+      discord_username = new.raw_user_meta_data ->> 'full_name',
+      discord_user_id = new.raw_user_meta_data ->> 'id',
+      avatar_stored = false;
   else
     insert into public.users_public (user_id, display_name, avatar, avatar_thumb, avatar_stored)
     values (
@@ -180,7 +227,7 @@ CREATE TABLE IF NOT EXISTS "public"."quests" (
     "updated_at" timestamp with time zone,
     "start_date" timestamp with time zone,
     "end_date" timestamp with time zone,
-    "image" "text"
+    "image" "text" NOT NULL
 );
 
 ALTER TABLE "public"."quests" OWNER TO "postgres";
@@ -209,7 +256,8 @@ CREATE TABLE IF NOT EXISTS "public"."users_public" (
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone,
     "points" integer DEFAULT 0 NOT NULL,
-    "discord_username" "text"
+    "discord_username" "text",
+    "discord_user_id" "text"
 );
 
 ALTER TABLE "public"."users_public" OWNER TO "postgres";
@@ -264,9 +312,6 @@ ALTER TABLE ONLY "public"."quest_achievements"
 ALTER TABLE ONLY "public"."users_public"
     ADD CONSTRAINT "users_public_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id");
 
-ALTER TABLE ONLY "public"."wallet_linking_nonces"
-    ADD CONSTRAINT "wallet_linking_nonces_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users_public"("user_id");
-
 ALTER TABLE "public"."mission_achievements" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "public"."missions" ENABLE ROW LEVEL SECURITY;
@@ -289,6 +334,10 @@ GRANT USAGE ON SCHEMA "public" TO "postgres";
 GRANT USAGE ON SCHEMA "public" TO "anon";
 GRANT USAGE ON SCHEMA "public" TO "authenticated";
 GRANT USAGE ON SCHEMA "public" TO "service_role";
+
+GRANT ALL ON FUNCTION "public"."get_missions"("p_quest_id" bigint, "p_user_id" "uuid", "last_created_at" timestamp with time zone, "max_count" integer) TO "anon";
+GRANT ALL ON FUNCTION "public"."get_missions"("p_quest_id" bigint, "p_user_id" "uuid", "last_created_at" timestamp with time zone, "max_count" integer) TO "authenticated";
+GRANT ALL ON FUNCTION "public"."get_missions"("p_quest_id" bigint, "p_user_id" "uuid", "last_created_at" timestamp with time zone, "max_count" integer) TO "service_role";
 
 GRANT ALL ON FUNCTION "public"."get_quests"("p_user_id" "uuid", "last_created_at" timestamp with time zone, "max_count" integer) TO "anon";
 GRANT ALL ON FUNCTION "public"."get_quests"("p_user_id" "uuid", "last_created_at" timestamp with time zone, "max_count" integer) TO "authenticated";
