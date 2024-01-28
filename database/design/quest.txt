@@ -2,8 +2,11 @@ quests
 	id - int8 - pk
     title - text - not null
     description - text - not null
+    image - text - not null
     points - int8 - not null
     participant_count - int8 - not null
+    start_date - timestampz - nullable
+    end_date - timestampz - nullable
 	created_at - timestampz - now()
 	updated_at - timestampz - nullable
 

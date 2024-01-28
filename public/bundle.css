@@ -1084,7 +1084,6 @@ button.component:hover {
   }
 }
 .leaderboard {
-  text-transform: capitalize;
   color: #ccc;
 }
 @container (width < 1100px) {
