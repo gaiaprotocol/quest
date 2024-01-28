@@ -1028,30 +1028,21 @@ button.component:hover {
   display: flex;
   align-items: center;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--line-color);
 }
 .side-panel > main > header > .signed-user {
   display: flex;
   gap: 12px;
   align-items: center;
 }
-.side-panel > main > header > .signed-user > .info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.side-panel > main > header > .signed-user > .info > .name {
+.side-panel > main > header > .signed-user > .name {
   font-weight: bold;
-}
-.side-panel > main > header > .signed-user > .info > .x-username {
-  color: #595959;
-  font-size: 12px;
 }
 .side-panel > main > header > button.close {
   margin-left: auto;
   padding: 4px 6px;
 }
 .side-panel > main > main {
+  border-top: 1px solid var(--line-color);
   padding: 8px 0;
 }
 .side-panel > main > main > section {
