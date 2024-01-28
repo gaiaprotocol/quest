@@ -1198,20 +1198,38 @@ button.component:hover {
   margin-top: 18px;
   color: #ccc;
   display: flex;
+  align-items: center;
 }
 @container (width < 1100px) {
   .quest-view > .quest-info > .details {
     font-size: 12px;
     flex-direction: column;
     gap: 16px;
+    align-items: flex-start;
   }
 }
-.quest-view > .quest-info > .details > .duration {
-  border-left: 1px solid #ccc;
-  margin-left: 18px;
-  padding-left: 18px;
+.quest-view > .quest-info > .details > .points {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  background-color: var(--content-bg-color);
+  color: var(--primary-color);
+  border-radius: 12px;
+  text-transform: capitalize;
 }
 @container (width < 1100px) {
+  .quest-view > .quest-info > .details > .points {
+    font-size: 12px;
+  }
+}
+.quest-view > .quest-info > .details > .participant-count,
+.quest-view > .quest-info > .details > .duration {
+  border-left: 1px solid #666;
+  margin-left: 16px;
+  padding-left: 16px;
+}
+@container (width < 1100px) {
+  .quest-view > .quest-info > .details > .participant-count,
   .quest-view > .quest-info > .details > .duration {
     border-left: none;
     margin-left: 0;
