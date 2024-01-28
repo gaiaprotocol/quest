@@ -36,6 +36,5 @@ serveWithOptions(async (req) => {
     user_id: user.id,
     wallet_address: walletAddress,
   });
-
   if (error) throw error;
 });

@@ -30,6 +30,15 @@ class QuestService extends SupabaseService<Quest> {
     if (error) throw error;
     return Supabase.safeResult<Quest[]>(data ?? []);
   }
+
+  public async checkAchieved(questId: number) {
+    const { data, error } = await Supabase.client.functions.invoke(
+      "check-achieved",
+      { body: { questId } },
+    );
+    if (error) throw error;
+    return data.achieved as boolean;
+  }
 }
 
 export default new QuestService();

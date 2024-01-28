@@ -44,7 +44,7 @@ export default class MissionListItem extends DomNode {
       el(
         "header",
         el("h2", icon, mission.title),
-        mission.is_achieved ? el(".achieved", new MaterialIcon("check"), "Achieved!") : actionButton,
+        mission.is_achieved ? el(".achieved", new MaterialIcon("check"), "Achieved") : actionButton,
       ),
       el("p", mission.description),
     );

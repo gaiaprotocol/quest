@@ -13,7 +13,8 @@ import QuestSignedUserManager from "../user/QuestSignedUserManager.js";
 import QuestService from "./QuestService.js";
 
 export default class QuestView extends View {
-  private currentQuestId: number | undefined;
+  private currentQuest: Quest | undefined;
+
   private questInfo: DomNode;
   private missionContainer: DomNode;
 
@@ -37,11 +38,9 @@ export default class QuestView extends View {
   }
 
   private async render(questId: number, quest?: Quest) {
-    this.currentQuestId = questId;
     this.questInfo.empty();
     quest ? this.renderQuest(quest) : this.fetchQuest(questId);
     this.missionContainer.empty().append(new MissionList(questId));
-    this.checkAchievements();
   }
 
   private async fetchQuest(questId: number) {
@@ -53,6 +52,8 @@ export default class QuestView extends View {
   }
 
   private async renderQuest(quest: Quest) {
+    this.currentQuest = quest;
+
     const formattedStartDate = quest.start_date
       ? DateUtil.format(quest.start_date)
       : "Starts anytime";
@@ -74,7 +75,7 @@ export default class QuestView extends View {
           quest.title,
         ),
         quest.is_achieved
-          ? el(".achieved", new MaterialIcon("check"), "Achieved!")
+          ? el(".achieved", new MaterialIcon("check"), "Achieved")
           : el(".not-achieved", "Not achieved"),
       ),
       el("p", quest.description),
@@ -85,11 +86,18 @@ export default class QuestView extends View {
         el(".duration", durationText),
       ),
     );
+
+    this.checkAchievements();
   }
 
   private async checkAchievements() {
     if (document.visibilityState !== "visible") return;
-    console.log(this.currentQuestId);
-    //TODO: check achievements
+    if (this.currentQuest && !this.currentQuest.is_achieved) {
+      if (await QuestService.checkAchieved(this.currentQuest.id)) {
+        this.currentQuest.is_achieved = true;
+        this.renderQuest(this.currentQuest);
+        this.missionContainer.empty().append(new MissionList(this.currentQuest.id));
+      }
+    }
   }
 }

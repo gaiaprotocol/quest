@@ -17,7 +17,6 @@ class QuestSignedUserManager extends EventContainer {
     const { data, error } = await Supabase.client.auth.getSession();
     if (error) throw error;
     const sessionUser = data?.session?.user;
-    console.log(sessionUser);
     if (sessionUser) {
       this.user = await QuestUserService.fetchUser(sessionUser.id);
       this.signedUserEmail = sessionUser.email;

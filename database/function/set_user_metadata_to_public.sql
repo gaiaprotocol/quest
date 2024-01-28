@@ -39,7 +39,7 @@ begin
       new.raw_user_meta_data ->> 'avatar_url',
       false,
       new.raw_user_meta_data ->> 'full_name',
-      new.raw_user_meta_data ->> 'id'
+      new.raw_user_meta_data ->> 'sub'
     ) on conflict (user_id) do update
     set
       display_name = new.raw_user_meta_data ->> 'full_name',
@@ -47,7 +47,7 @@ begin
       avatar_thumb = new.raw_user_meta_data ->> 'avatar_url',
       avatar_stored = false,
       discord_username = new.raw_user_meta_data ->> 'full_name',
-      discord_user_id = new.raw_user_meta_data ->> 'id';
+      discord_user_id = new.raw_user_meta_data ->> 'sub';
   else
     insert into public.users_public (user_id, display_name, avatar, avatar_thumb, avatar_stored)
     values (
