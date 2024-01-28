@@ -35,7 +35,7 @@ BEGIN
     WHERE 
         (last_created_at IS NULL OR q.created_at < last_created_at)
     ORDER BY 
-        q.created_at DESC
+        q.id DESC
     LIMIT 
         max_count;
 END;

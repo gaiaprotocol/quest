@@ -43,6 +43,9 @@ export default class QuestListItem extends DomNode {
       ),
     );
 
-    this.onDom("click", () => Router.go(`/quest/${quest.id}`));
+    this.onDom(
+      "click",
+      () => Router.go(`/quest/${quest.id}`, undefined, quest),
+    );
   }
 }

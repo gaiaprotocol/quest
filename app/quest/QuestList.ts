@@ -6,6 +6,7 @@ import QuestService from "./QuestService.js";
 
 export default class QuestList extends DomNode {
   private store = new Store("quest-list");
+  private lastCreatedAt: string | undefined;
 
   constructor() {
     super(".quest-list");
@@ -25,6 +26,7 @@ export default class QuestList extends DomNode {
 
     const quests = await QuestService.fetchQuests(
       QuestSignedUserManager.user?.user_id,
+      this.lastCreatedAt,
     );
 
     this.store.set("cached-quests", quests, true);
@@ -34,6 +36,7 @@ export default class QuestList extends DomNode {
       for (const quest of quests) {
         this.append(new QuestListItem(quest));
       }
+      this.lastCreatedAt = quests[quests.length - 1]?.created_at;
     }
   }
 }

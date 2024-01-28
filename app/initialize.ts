@@ -11,6 +11,7 @@ import Env from "./Env.js";
 import Layout from "./layout/Layout.js";
 import LeaderboardView from "./leaderboard/LeaderboardView.js";
 import QuestsView from "./quest/QuestsView.js";
+import QuestView from "./quest/QuestView.js";
 import QuestSignedUserManager from "./user/QuestSignedUserManager.js";
 import WalletManager from "./wallet/WalletManager.js";
 
@@ -35,6 +36,7 @@ export default async function initialize(config: Config) {
 
   Router.route("**", Layout);
   Router.route(["", "quests"], QuestsView);
+  Router.route("quest/{questId}", QuestView);
   Router.route("leaderboard", LeaderboardView);
 
   AuthUtil.checkEmailAccess();

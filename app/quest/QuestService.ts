@@ -6,6 +6,10 @@ class QuestService extends SupabaseService<Quest> {
     super("quests", "*", 50);
   }
 
+  public async fetchQuest(questId: number) {
+    return await this.safeSelectSingle((b) => b.eq("id", questId));
+  }
+
   public async fetchQuests(userId?: string, lastCreatedAt?: string) {
     const { data, error } = await Supabase.client.rpc(
       "get_quests",
@@ -16,7 +20,6 @@ class QuestService extends SupabaseService<Quest> {
       },
     );
     if (error) throw error;
-    console.log(data);
     return Supabase.safeResult<Quest[]>(data ?? []);
   }
 }
