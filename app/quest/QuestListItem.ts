@@ -1,4 +1,11 @@
-import { DateUtil, DomNode, el } from "@common-module/app";
+import {
+  Button,
+  DateUtil,
+  DomNode,
+  el,
+  MaterialIcon,
+  Router,
+} from "@common-module/app";
 import Quest from "../database-interface/Quest.js";
 
 export default class QuestListItem extends DomNode {
@@ -14,11 +21,28 @@ export default class QuestListItem extends DomNode {
     const durationText = `${formattedStartDate} - ${formattedEndDate}`;
 
     this.append(
-      el(".points", `${quest.points} points`),
-      el(".title", quest.title),
-      el(".participant-count", `${quest.participant_count} participants`),
-      el(".duration", durationText),
-      el(".archived", quest.is_achieved ? "Archived" : "Active"),
+      el(".image", {
+        style: {
+          backgroundImage: `url(${quest.image})`,
+        },
+      }),
+      el(
+        "main",
+        el(".points", new MaterialIcon("verified"), `${quest.points} points`),
+        el(".title", quest.title),
+        el(
+          ".details",
+          el(".duration", durationText),
+          el(".participant-count", `${quest.participant_count} participants`),
+        ),
+        new Button({
+          title: quest.is_achieved ? "Archived" : "Join",
+          disabled: quest.is_achieved,
+          icon: new MaterialIcon(quest.is_achieved ? "check" : "login"),
+        }),
+      ),
     );
+
+    this.onDom("click", () => Router.go(`/quest/${quest.id}`));
   }
 }

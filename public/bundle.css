@@ -1,6 +1,3 @@
-/*!***********************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!../app-module/style/reset.css ***!
-  \***********************************************************************************************************/
 /***
     The new CSS reset - version 1.8.4 (last updated 14.2.2023)
     GitHub page: https://github.com/elad2412/the-new-css-reset
@@ -101,9 +98,6 @@ meter {
 :where(dialog:modal) {
     all: revert;
 }
-/*!*********************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/less-loader/dist/cjs.js!./public/style/main.less ***!
-  \*********************************************************************************************************************************************/
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
@@ -121,6 +115,7 @@ meter {
 :root {
   --wrapper-bg-color: #121212;
   --content-bg-color: #141414;
+  --panel-bg-color: #1E1E1E;
   --text-color: #fff;
   --line-color: #252527;
   --primary-color: #C1A87D;
@@ -916,6 +911,10 @@ button.component:hover {
   height: 32px;
   border-radius: 16px;
 }
+@font-face {
+  font-family: 'Mona-Sans-ExtraBoldWide';
+  src: url('/fonts/Mona-Sans-ExtraBoldWide.ttf') format('woff2');
+}
 .layout {
   height: 100%;
 }
@@ -1127,5 +1126,79 @@ button.component:hover {
 .leaderboard > tbody > tr > td.points {
   font-weight: bold;
   color: var(--primary-color);
+}
+.quests-view {
+  max-width: 800px;
+  margin: 30px auto;
+}
+@container (width < 1100px) {
+  .quests-view {
+    margin: 0;
+    padding: 20px;
+  }
+}
+.quest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.quest-list-item {
+  background-color: var(--panel-bg-color);
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  cursor: pointer;
+}
+.quest-list-item > .image {
+  width: 140px;
+  height: 160px;
+  border-radius: 8px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.quest-list-item > main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+.quest-list-item > main > .points {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  background-color: var(--content-bg-color);
+  color: var(--primary-color);
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: capitalize;
+}
+@container (width < 1100px) {
+  .quest-list-item > main > .points {
+    font-size: 12px;
+  }
+}
+.quest-list-item > main > .title {
+  font-family: 'Mona-Sans-ExtraBoldWide';
+  font-size: 18px;
+  line-height: 1.5em;
+}
+@container (width < 1100px) {
+  .quest-list-item > main > .title {
+    font-size: 14px;
+  }
+}
+.quest-list-item > main > .details {
+  font-size: 12px;
+  color: var(--disable-color);
+  display: flex;
+  gap: 16px;
+}
+@container (width < 1100px) {
+  .quest-list-item > main > .details {
+    flex-direction: column;
+  }
 }
 

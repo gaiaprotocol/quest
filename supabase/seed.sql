@@ -179,7 +179,8 @@ CREATE TABLE IF NOT EXISTS "public"."quests" (
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
     "updated_at" timestamp with time zone,
     "start_date" timestamp with time zone,
-    "end_date" timestamp with time zone
+    "end_date" timestamp with time zone,
+    "image" "text"
 );
 
 ALTER TABLE "public"."quests" OWNER TO "postgres";
@@ -275,6 +276,8 @@ ALTER TABLE "public"."quest_achievements" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."quests" ENABLE ROW LEVEL SECURITY;
 
 ALTER TABLE "public"."users_public" ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "view everyone" ON "public"."missions" FOR SELECT USING (true);
 
 CREATE POLICY "view everyone" ON "public"."quests" FOR SELECT USING (true);
 
