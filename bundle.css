@@ -1261,12 +1261,44 @@ button.component:hover {
   background-color: var(--panel-bg-color);
   padding: 20px;
   border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+@container (width < 1100px) {
+  .quest-list-item {
+    padding: 16px;
+  }
+}
+.quest-list-item > .points {
+  display: none;
+  gap: 4px;
+  align-items: center;
+  background-color: var(--content-bg-color);
+  color: var(--primary-color);
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: capitalize;
+  font-size: 12px;
+}
+@container (width < 1100px) {
+  .quest-list-item > .points {
+    display: flex;
+  }
+}
+.quest-list-item > main {
   display: flex;
   gap: 20px;
   align-items: center;
-  cursor: pointer;
 }
-.quest-list-item > .image {
+@container (width < 1100px) {
+  .quest-list-item > main {
+    gap: 16px;
+  }
+}
+.quest-list-item > main > .image {
   width: 140px;
   height: 160px;
   border-radius: 8px;
@@ -1274,13 +1306,24 @@ button.component:hover {
   background-repeat: no-repeat;
   background-position: center;
 }
-.quest-list-item > main {
+@container (width < 1100px) {
+  .quest-list-item > main > .image {
+    width: 100px;
+    height: 132px;
+  }
+}
+.quest-list-item > main > .content {
   display: flex;
   flex-direction: column;
   gap: 16px;
   align-items: flex-start;
 }
-.quest-list-item > main > .points {
+@container (width < 1100px) {
+  .quest-list-item > main > .content {
+    gap: 12px;
+  }
+}
+.quest-list-item > main > .content > .points {
   display: flex;
   gap: 4px;
   align-items: center;
@@ -1291,29 +1334,30 @@ button.component:hover {
   text-transform: capitalize;
 }
 @container (width < 1100px) {
-  .quest-list-item > main > .points {
-    font-size: 12px;
+  .quest-list-item > main > .content > .points {
+    display: none;
   }
 }
-.quest-list-item > main > .title {
+.quest-list-item > main > .content > .title {
   font-family: 'Mona-Sans-ExtraBoldWide';
   font-size: 18px;
   line-height: 1.5em;
 }
 @container (width < 1100px) {
-  .quest-list-item > main > .title {
+  .quest-list-item > main > .content > .title {
     font-size: 14px;
   }
 }
-.quest-list-item > main > .details {
+.quest-list-item > main > .content > .details {
   font-size: 12px;
   color: var(--disable-color);
   display: flex;
   gap: 16px;
 }
 @container (width < 1100px) {
-  .quest-list-item > main > .details {
+  .quest-list-item > main > .content > .details {
     flex-direction: column;
+    gap: 12px;
   }
 }
 .mission-list {

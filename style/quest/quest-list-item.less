@@ -2,59 +2,100 @@
     background-color: var(--panel-bg-color);
     padding         : 20px;
     border-radius   : 12px;
-    display         : flex;
-    gap             : 20px;
-    align-items     : center;
     cursor          : pointer;
+    display         : flex;
+    flex-direction  : column;
+    gap             : 16px;
+    align-items     : flex-start;
 
-    >.image {
-        width              : 140px;
-        height             : 160px;
-        border-radius      : 8px;
-        background-size    : cover;
-        background-repeat  : no-repeat;
-        background-position: center;
+    @container (width < @safe-width) {
+        padding: 16px;
+    }
+
+    >.points {
+        display         : none;
+        gap             : 4px;
+        align-items     : center;
+        background-color: var(--content-bg-color);
+        color           : var(--primary-color);
+        padding         : 2px 8px;
+        border-radius   : 12px;
+        text-transform  : capitalize;
+        font-size       : 12px;
+
+        @container (width < @safe-width) {
+            display: flex;
+        }
     }
 
     >main {
-        display       : flex;
-        flex-direction: column;
-        gap           : 16px;
-        align-items   : flex-start;
+        display    : flex;
+        gap        : 20px;
+        align-items: center;
 
-        >.points {
-            display         : flex;
-            gap             : 4px;
-            align-items     : center;
-            background-color: var(--content-bg-color);
-            color           : var(--primary-color);
-            padding         : 2px 8px;
-            border-radius   : 12px;
-            text-transform  : capitalize;
+        @container (width < @safe-width) {
+            gap: 16px;
+        }
+
+        >.image {
+            width              : 140px;
+            height             : 160px;
+            border-radius      : 8px;
+            background-size    : cover;
+            background-repeat  : no-repeat;
+            background-position: center;
 
             @container (width < @safe-width) {
+                width : 100px;
+                height: 132px;
+            }
+        }
+
+        >.content {
+            display       : flex;
+            flex-direction: column;
+            gap           : 16px;
+            align-items   : flex-start;
+
+            @container (width < @safe-width) {
+                gap: 12px;
+            }
+
+            >.points {
+                display         : flex;
+                gap             : 4px;
+                align-items     : center;
+                background-color: var(--content-bg-color);
+                color           : var(--primary-color);
+                padding         : 2px 8px;
+                border-radius   : 12px;
+                text-transform  : capitalize;
+
+                @container (width < @safe-width) {
+                    display: none;
+                }
+            }
+
+            >.title {
+                font-family: 'Mona-Sans-ExtraBoldWide';
+                font-size  : 18px;
+                line-height: 1.5em;
+
+                @container (width < @safe-width) {
+                    font-size: 14px;
+                }
+            }
+
+            >.details {
                 font-size: 12px;
-            }
-        }
+                color    : var(--disable-color);
+                display  : flex;
+                gap      : 16px;
 
-        >.title {
-            font-family: 'Mona-Sans-ExtraBoldWide';
-            font-size  : 18px;
-            line-height: 1.5em;
-
-            @container (width < @safe-width) {
-                font-size: 14px;
-            }
-        }
-
-        >.details {
-            font-size: 12px;
-            color    : var(--disable-color);
-            display  : flex;
-            gap      : 16px;
-
-            @container (width < @safe-width) {
-                flex-direction: column;
+                @container (width < @safe-width) {
+                    flex-direction: column;
+                    gap           : 12px;
+                }
             }
         }
     }
