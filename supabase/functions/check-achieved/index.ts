@@ -93,6 +93,7 @@ serveWithOptions(async (req) => {
           }
         } catch (error) {
           console.log(error);
+          achieved = false;
         }
       } else {
         achieved = false;
