@@ -23,6 +23,20 @@ serveWithOptions(async (req) => {
     throw new Error("Target X username does not match");
   }
 
+  const { data: questData, error: questError } = await supabase.from("quests")
+    .select().eq(
+      "id",
+      missionData.quest_id,
+    )
+    .single();
+  if (questError) throw questError;
+  if (questData.start_date && new Date(questData.start_date) > new Date()) {
+    throw new Error("Mission not started");
+  }
+  if (questData.end_date && new Date(questData.end_date) < new Date()) {
+    throw new Error("Mission ended");
+  }
+
   const user = await getSignedUser(req);
   if (!user) throw new Error("Unauthorized");
 

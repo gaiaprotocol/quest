@@ -96,8 +96,15 @@ export default class QuestView extends View {
       if (await QuestService.checkAchieved(this.currentQuest.id)) {
         this.currentQuest.is_achieved = true;
         this.renderQuest(this.currentQuest);
-        this.missionContainer.empty().append(new MissionList(this.currentQuest.id));
+
+        if (QuestSignedUserManager.user) {
+          QuestSignedUserManager.user.points += this.currentQuest.points;
+          QuestSignedUserManager.fireEvent("updatePoints");
+        }
       }
+      this.missionContainer.empty().append(
+        new MissionList(this.currentQuest.id),
+      );
     }
   }
 }

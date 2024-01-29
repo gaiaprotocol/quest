@@ -40,6 +40,12 @@ export default class TitleBar extends DomNode {
       this.userSection.append(
         new TitleBarUserDisplay(QuestSignedUserManager.user!),
       );
+
+      this.onDelegate(QuestSignedUserManager, "updatePoints", () => {
+        this.userSection.empty().append(
+          new TitleBarUserDisplay(QuestSignedUserManager.user!),
+        );
+      });
     }
   }
 

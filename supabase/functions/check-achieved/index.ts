@@ -20,6 +20,20 @@ serveWithOptions(async (req) => {
   const { questId } = await req.json();
   if (!questId) throw new Error("Missing questId");
 
+  const { data: questData, error: questError } = await supabase.from("quests")
+    .select().eq(
+      "id",
+      questId,
+    )
+    .single();
+  if (questError) throw questError;
+  if (questData.start_date && new Date(questData.start_date) > new Date()) {
+    throw new Error("Mission not started");
+  }
+  if (questData.end_date && new Date(questData.end_date) < new Date()) {
+    throw new Error("Mission ended");
+  }
+
   const { data: missionData, error: missionError } = await supabase.from(
     "missions",
   ).select().eq(
@@ -41,9 +55,25 @@ serveWithOptions(async (req) => {
   const walletAddress = usersPublicData?.[0]?.wallet_address;
   const discordUserId = usersPublicData?.[0]?.discord_user_id;
 
+  const { data: missionAchievementsData, error: missionAchievementsError } =
+    await supabase
+      .from("mission_achievements").select(
+        "mission_id",
+      ).in(
+        "mission_id",
+        missionData.map((mission) => mission.id),
+      ).eq(
+        "user_id",
+        user.id,
+      );
+  if (missionAchievementsError) throw missionAchievementsError;
+
   let achieved = true;
   for (const mission of missionData) {
-    if (!mission.is_achieved) {
+    const missionAchievement = missionAchievementsData?.find((achievement) =>
+      achievement.mission_id === mission.id
+    );
+    if (!missionAchievement) {
       if (mission.type === "join_discord") { // check if user has joined the discord server
         try {
           const guildMember = await fetchGuildMember(
@@ -64,9 +94,9 @@ serveWithOptions(async (req) => {
         } catch (error) {
           console.log(error);
         }
+      } else {
+        achieved = false;
       }
-    } else {
-      achieved = false;
     }
   }
 

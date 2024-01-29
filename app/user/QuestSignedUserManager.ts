@@ -10,7 +10,7 @@ class QuestSignedUserManager extends EventContainer {
 
   constructor() {
     super();
-    this.addAllowedEvents("walletLinked");
+    this.addAllowedEvents("walletLinked", "updatePoints");
   }
 
   public async fetchUserOnInit() {
