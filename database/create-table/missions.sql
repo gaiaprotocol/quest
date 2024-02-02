@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS "public"."missions" (
     "criteria" JSONB DEFAULT '{}'::JSONB NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "points" BIGINT NOT NULL,
     "created_at" TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     "updated_at" TIMESTAMP WITH TIME ZONE
 );

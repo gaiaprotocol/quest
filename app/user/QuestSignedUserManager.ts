@@ -1,6 +1,6 @@
-import { Confirm, EventContainer, msg, Supabase } from "@common-module/app";
-import QuestUserPublic from "../database-interface/QuestUserPublic.js";
+import { EventContainer, Supabase } from "@common-module/app";
 import Env from "../Env.js";
+import QuestUserPublic from "../database-interface/QuestUserPublic.js";
 import WalletManager from "../wallet/WalletManager.js";
 import QuestUserService from "./QuestUserService.js";
 
@@ -31,8 +31,8 @@ class QuestSignedUserManager extends EventContainer {
     return this.user?.wallet_address !== undefined;
   }
 
-  public async signIn(provider: "x" | "discord") {
-    await Supabase.signIn(provider === "x" ? "twitter" : provider);
+  public async signIn() {
+    await Supabase.signIn("twitter");
   }
 
   public async linkWallet() {
@@ -64,24 +64,13 @@ class QuestSignedUserManager extends EventContainer {
     }
   }
 
-  public linkDiscordToX() {
-    new Confirm({
-      title: msg("account-linking-guide-popup-title"),
-      message: msg("account-linking-guide-discord-to-x", {
-        email: this.signedUserEmail,
-      }),
-      confirmTitle: msg("account-linking-guide-x-login-button"),
-    }, () => this.signIn("x"));
-  }
-
-  public linkXToDiscord() {
-    new Confirm({
-      title: msg("account-linking-guide-popup-title"),
-      message: msg("account-linking-guide-x-to-discord", {
-        email: this.signedUserEmail,
-      }),
-      confirmTitle: msg("account-linking-guide-discord-login-button"),
-    }, () => this.signIn("discord"));
+  public async linkDiscordAccount(code: string) {
+    const { error: linkError } = await Supabase.client.functions
+      .invoke(
+        "link-discord-account",
+        { body: { code } },
+      );
+    if (linkError) throw linkError;
   }
 
   public async signOut() {

@@ -11,6 +11,7 @@ RETURNS TABLE (
     criteria jsonb,
     title text,
     description text,
+    points bigint,
     created_at timestamp with time zone,
     updated_at timestamp with time zone,
     is_achieved boolean
@@ -24,6 +25,7 @@ BEGIN
         m.criteria,
         m.title,
         m.description,
+        m.points,
         m.created_at,
         m.updated_at,
         EXISTS (SELECT 1 FROM mission_achievements ma WHERE ma.mission_id = m.id AND ma.user_id = p_user_id) AS is_achieved

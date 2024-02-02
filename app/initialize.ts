@@ -1,4 +1,5 @@
 import {
+  Alert,
   AppInitializer,
   AuthUtil,
   el,
@@ -33,6 +34,7 @@ MaterialIconSystem.launch();
 
 export default async function initialize(config: Config) {
   Env.dev = config.dev;
+  Env.discordAuthUrl = config.discordAuthUrl;
   Env.messageForWalletLinking = config.messageForWalletLinking;
 
   AppInitializer.initialize(
@@ -54,4 +56,15 @@ export default async function initialize(config: Config) {
   Router.route("leaderboard", LeaderboardView);
 
   AuthUtil.checkEmailAccess();
+
+  if (QuestSignedUserManager.signed) {
+    const code = new URLSearchParams(window.location.search).get("code");
+    if (code) {
+      await QuestSignedUserManager.linkDiscordAccount(code);
+      new Alert({
+        title: "Discord Account Linked",
+        message: "Your Discord account has been linked.",
+      });
+    }
+  }
 }

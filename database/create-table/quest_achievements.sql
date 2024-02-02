@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS "public"."quest_achievements" (
     "quest_id" int8 NOT NULL,
     "user_id" uuid NOT NULL,
+    "discord_user_id" text,
     "wallet_address" text,
     "achieved_at" timestamp with time zone DEFAULT now() NOT NULL,
     PRIMARY KEY ("quest_id", "user_id")

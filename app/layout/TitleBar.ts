@@ -1,4 +1,4 @@
-import { Button, DomNode, DropdownMenu, el } from "@common-module/app";
+import { Button, DomNode, el } from "@common-module/app";
 import QuestSignedUserManager from "../user/QuestSignedUserManager.js";
 import TitleBarUserDisplay from "./title-bar/TitleBarUserDisplay.js";
 
@@ -17,23 +17,8 @@ export default class TitleBar extends DomNode {
       this.userSection.append(
         new Button({
           tag: ".sign-in",
-          title: "Sign in",
-          click: (event, dom) => {
-            event.stopPropagation();
-            const rect = dom.rect;
-
-            new DropdownMenu({
-              left: rect.right - 150,
-              top: rect.bottom,
-              items: [{
-                title: "Sign in with 𝕏",
-                click: () => QuestSignedUserManager.signIn("x"),
-              }, {
-                title: "Sign in with Discord",
-                click: () => QuestSignedUserManager.signIn("discord"),
-              }],
-            });
-          },
+          title: "Sign in with 𝕏",
+          click: () => QuestSignedUserManager.signIn(),
         }),
       );
     } else {

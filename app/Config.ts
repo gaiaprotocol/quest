@@ -4,7 +4,8 @@ export default interface Config {
   supabaseUrl: string;
   supabaseAnonKey: string;
 
-  walletConnectProjectId: string;
+  discordAuthUrl: string;
 
+  walletConnectProjectId: string;
   messageForWalletLinking: string;
 }

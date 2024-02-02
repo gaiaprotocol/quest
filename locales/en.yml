@@ -1,13 +1,2 @@
-account-linking-guide-popup-title: Account Linking Guide
-account-linking-guide-discord-to-x: >
-  If you wish to link your 𝕏 account with your Discord account, please ensure you log into Discord using the same email address as your current 𝕏 account. The email address registered to your current 𝕏 account is as follows:
-
-
-  {email}
-account-linking-guide-x-to-discord: >
-  If you wish to link your Discord account with your 𝕏 account, please ensure you log into 𝕏 using the same email address as your current Discord account. The email address registered to your current Discord account is as follows:
-
-
-  {email}
 account-linking-guide-x-login-button: Sign in with 𝕏
 account-linking-guide-discord-login-button: Sign in with Discord

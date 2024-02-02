@@ -85,6 +85,7 @@ serveWithOptions(async (req) => {
               .insert({
                 mission_id: mission.id,
                 user_id: user.id,
+                discord_user_id: discordUserId,
                 wallet_address: walletAddress,
               });
             if (error) throw error;
@@ -105,6 +106,7 @@ serveWithOptions(async (req) => {
     const { error } = await supabase.from("quest_achievements").insert({
       quest_id: questId,
       user_id: user.id,
+      discord_user_id: discordUserId,
       wallet_address: walletAddress,
     });
     if (error) throw error;

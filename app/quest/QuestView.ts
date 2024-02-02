@@ -81,7 +81,11 @@ export default class QuestView extends View {
       el("p", quest.description),
       el(
         ".details",
-        el(".points", new MaterialIcon("verified"), `${quest.points} points`),
+        el(
+          ".points",
+          new MaterialIcon("verified"),
+          `${quest.total_points} points`,
+        ),
         el(".participant-count", `${quest.participant_count} participants`),
         el(".duration", durationText),
       ),
@@ -98,7 +102,7 @@ export default class QuestView extends View {
         this.renderQuest(this.currentQuest);
 
         if (QuestSignedUserManager.user) {
-          QuestSignedUserManager.user.points += this.currentQuest.points;
+          QuestSignedUserManager.user.points += this.currentQuest.total_points;
           QuestSignedUserManager.fireEvent("updatePoints");
         }
       }

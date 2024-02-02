@@ -3,7 +3,7 @@ export default interface Quest {
   title: string;
   description: string;
   image?: string;
-  points: number;
+  total_points: number;
   participant_count: number;
   start_date?: string;
   end_date?: string;

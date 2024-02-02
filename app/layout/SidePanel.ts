@@ -10,6 +10,7 @@ import {
   Store,
   StringUtil,
 } from "@common-module/app";
+import Env from "../Env.js";
 import QuestSignedUserManager from "../user/QuestSignedUserManager.js";
 import QuestUserService from "../user/QuestUserService.js";
 
@@ -37,7 +38,11 @@ export default class SidePanel extends DomNode {
           ? el(
             ".signed-user",
             avatar,
-            el(".name", QuestSignedUserManager.user.display_name),
+            el(
+              ".info",
+              el(".name", QuestSignedUserManager.user.display_name),
+              el(".x-username", `@${QuestSignedUserManager.user.x_username}`),
+            ),
           )
           : undefined,
         new Button({
@@ -49,24 +54,15 @@ export default class SidePanel extends DomNode {
       el(
         "main",
         el(
-          "section.x",
-          el("h3", "𝕏"),
-          QuestSignedUserManager.user?.x_username
-            ? el(".value", QuestSignedUserManager.user.x_username)
-            : new Button({
-              title: "Link 𝕏 Account",
-              click: () => QuestSignedUserManager.linkDiscordToX(),
-            }),
-        ),
-        el(
           "section.discord",
           el("h3", "Discord"),
           QuestSignedUserManager.user?.discord_username
             ? el(".value", QuestSignedUserManager.user.discord_username)
-            : new Button({
-              title: "Link Discord Account",
-              click: () => QuestSignedUserManager.linkXToDiscord(),
-            }),
+            : undefined,
+          new Button({
+            title: "Link Discord Account",
+            href: Env.discordAuthUrl,
+          }),
         ),
         el(
           "section.wallet-address",
@@ -83,23 +79,24 @@ export default class SidePanel extends DomNode {
                 target: "_blank",
               },
             )
-            : new Button({
-              title: "Link Wallet",
-              click: async (event, button) => {
-                button.loading = true;
-                try {
-                  await QuestSignedUserManager.linkWallet();
-                } catch (error: any) {
-                  console.error(error);
-                  new ErrorAlert({
-                    title: "Failed to link wallet",
-                    message: error.message,
-                  });
-                }
-                button.loading = false;
-                this.delete();
-              },
-            }),
+            : undefined,
+          new Button({
+            title: "Link Wallet",
+            click: async (event, button) => {
+              button.loading = true;
+              try {
+                await QuestSignedUserManager.linkWallet();
+              } catch (error: any) {
+                console.error(error);
+                new ErrorAlert({
+                  title: "Failed to link wallet",
+                  message: error.message,
+                });
+              }
+              button.loading = false;
+              this.delete();
+            },
+          }),
         ),
       ),
       el(

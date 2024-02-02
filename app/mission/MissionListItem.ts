@@ -1,5 +1,6 @@
 import { Button, DomNode, el, MaterialIcon } from "@common-module/app";
 import Mission, { MissionType } from "../database-interface/Mission.js";
+import Env from "../Env.js";
 import QuestSignedUserManager from "../user/QuestSignedUserManager.js";
 import MissionService from "./MissionService.js";
 
@@ -24,7 +25,7 @@ export default class MissionListItem extends DomNode {
         })
         : new Button({
           title: "Sign in with 𝕏",
-          click: () => QuestSignedUserManager.linkDiscordToX(),
+          click: () => QuestSignedUserManager.signIn(),
         });
     } else if (mission.type === MissionType.JOIN_DISCORD) {
       icon = el("img", { src: "/images/social/discord.svg" });
@@ -35,18 +36,27 @@ export default class MissionListItem extends DomNode {
           href: mission.criteria.target_discord_url,
         })
         : new Button({
-          title: "Sign in with Discord",
-          click: () => QuestSignedUserManager.linkXToDiscord(),
+          title: "Link Discord Account",
+          href: Env.discordAuthUrl,
         });
     }
 
     this.append(
       el(
-        "header",
-        el("h2", icon, mission.title),
-        mission.is_achieved ? el(".achieved", new MaterialIcon("check"), "Achieved") : actionButton,
+        ".points",
+        `Get ${mission.points} points`,
       ),
-      el("p", mission.description),
+      el(
+        "main",
+        el(
+          "header",
+          el("h2", icon, mission.title),
+          mission.is_achieved
+            ? el(".achieved", new MaterialIcon("check"), "Achieved")
+            : actionButton,
+        ),
+        el("p", mission.description),
+      ),
     );
   }
 }

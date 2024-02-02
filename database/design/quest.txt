@@ -3,7 +3,7 @@ quests
     title - text - not null
     description - text - not null
     image - text - not null
-    points - int8 - not null
+    total_points - int8 - not null
     participant_count - int8 - not null
     start_date - timestampz - nullable
     end_date - timestampz - nullable
@@ -17,17 +17,20 @@ missions
     criteria - jsonb - {} - not null
     title - text - not null
     description - text - not null
+    points - int8 - not null
 	created_at - timestampz - now()
 	updated_at - timestampz - nullable
 
 mission_achievements
     mission_id - int8 - fk(missions.id) - pk
     user_id - uuid - fk(users_public.user_id) - pk
+    discord_user_id - text - nullable
     wallet_address - text - nullable
     achieved_at - timestampz - now()
 
 quest_achievements
     quest_id - int8 - fk(quests.id) - pk
     user_id - uuid - fk(users_public.user_id) - pk
+    discord_user_id - text - nullable
     wallet_address - text - nullable
     achieved_at - timestampz - now()

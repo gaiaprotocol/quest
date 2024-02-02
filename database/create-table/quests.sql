@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS "public"."quests" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "image" TEXT NOT NULL,
-    "points" BIGINT NOT NULL,
+    "total_points" BIGINT NOT NULL,
     "participant_count" BIGINT DEFAULT '0'::bigint NOT NULL,
     "start_date" timestamp with time zone
     "end_date" timestamp with time zone,

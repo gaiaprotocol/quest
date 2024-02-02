@@ -41,13 +41,18 @@ serveWithOptions(async (req) => {
   if (!user) throw new Error("Unauthorized");
 
   const { data: usersPublicData, error: usersPublicError } = await supabase
-    .from("users_public").select("wallet_address").eq("user_id", user.id);
+    .from("users_public").select("wallet_address, discord_user_id").eq(
+      "user_id",
+      user.id,
+    );
   if (usersPublicError) throw usersPublicError;
   const walletAddress = usersPublicData?.[0]?.wallet_address;
+  const discordUserId = usersPublicData?.[0]?.discord_user_id;
 
   const { error } = await supabase.from("mission_achievements").insert({
     mission_id: missionId,
     user_id: user.id,
+    discord_user_id: discordUserId,
     wallet_address: walletAddress,
   });
   if (error) throw error;

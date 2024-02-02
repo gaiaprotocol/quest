@@ -21,7 +21,11 @@ export default class QuestListItem extends DomNode {
     const durationText = `${formattedStartDate} - ${formattedEndDate}`;
 
     this.append(
-      el(".points", new MaterialIcon("verified"), `${quest.points} points`),
+      el(
+        ".points",
+        new MaterialIcon("verified"),
+        `${quest.total_points} points`,
+      ),
       el(
         "main",
         el(".image", {
@@ -31,7 +35,11 @@ export default class QuestListItem extends DomNode {
         }),
         el(
           ".content",
-          el(".points", new MaterialIcon("verified"), `${quest.points} points`),
+          el(
+            ".points",
+            new MaterialIcon("verified"),
+            `${quest.total_points} points`,
+          ),
           el(".title", quest.title),
           el(
             ".details",
