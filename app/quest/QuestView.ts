@@ -10,6 +10,7 @@ import Quest from "../database-interface/Quest.js";
 import Layout from "../layout/Layout.js";
 import MissionList from "../mission/MissionList.js";
 import QuestSignedUserManager from "../user/QuestSignedUserManager.js";
+import QuestUserService from "../user/QuestUserService.js";
 import QuestService from "./QuestService.js";
 
 export default class QuestView extends View {
@@ -100,15 +101,20 @@ export default class QuestView extends View {
       if (await QuestService.checkAchieved(this.currentQuest.id)) {
         this.currentQuest.is_achieved = true;
         this.renderQuest(this.currentQuest);
-
-        if (QuestSignedUserManager.user) {
-          QuestSignedUserManager.user.points += this.currentQuest.total_points;
-          QuestSignedUserManager.fireEvent("updatePoints");
-        }
+        this.refreshUserPoints();
       }
       this.missionContainer.empty().append(
         new MissionList(this.currentQuest.id),
       );
+    }
+  }
+
+  private async refreshUserPoints() {
+    if (QuestSignedUserManager.user) {
+      QuestSignedUserManager.user = await QuestUserService.fetchUser(
+        QuestSignedUserManager.user.user_id,
+      );
+      QuestSignedUserManager.fireEvent("updatePoints");
     }
   }
 }
