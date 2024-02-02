@@ -1,49 +1,57 @@
 .mission-list-item {
-    background-color: var(--panel-bg-color);
-    padding         : 20px;
-    border-radius   : 12px;
+    >.points {
+        text-transform: capitalize;
+        font-weight   : bold;
+        margin-bottom : 16px;
+    }
 
-    >header {
-        display    : flex;
-        align-items: flex-start;
+    >main {
+        background-color: var(--panel-bg-color);
+        padding         : 20px;
+        border-radius   : 12px;
 
-        @container (width < @safe-width) {
-            flex-direction: column;
-            gap           : 12px;
-        }
-
-        >h2 {
-            flex-grow  : 1;
+        >header {
             display    : flex;
-            align-items: center;
-            gap        : 8px;
-            font-weight: bold;
-            font-size  : 16px;
-        }
+            align-items: flex-start;
 
-        >.achieved {
-            border        : 1px solid var(--success-color);
-            color         : var(--success-color);
-            padding       : 8px 12px;
-            border-radius : 16px;
-            text-transform: capitalize;
-            display       : flex;
-            align-items   : center;
-            gap           : 6px;
+            @container (width < @safe-width) {
+                flex-direction: column;
+                gap           : 12px;
+            }
 
-            >.icon {
-                padding  : 0;
-                font-size: 16px;
+            >h2 {
+                flex-grow  : 1;
+                display    : flex;
+                align-items: center;
+                gap        : 8px;
+                font-weight: bold;
+                font-size  : 16px;
+            }
+
+            >.achieved {
+                border        : 1px solid var(--success-color);
+                color         : var(--success-color);
+                padding       : 8px 12px;
+                border-radius : 16px;
+                text-transform: capitalize;
+                display       : flex;
+                align-items   : center;
+                gap           : 6px;
+
+                >.icon {
+                    padding  : 0;
+                    font-size: 16px;
+                }
+            }
+
+            >button {
+                height: 32px;
             }
         }
 
-        >button {
-            height: 32px;
+        >p {
+            margin-top: 12px;
+            color     : #ccc;
         }
-    }
-
-    >p {
-        margin-top: 12px;
-        color     : #ccc;
     }
 }

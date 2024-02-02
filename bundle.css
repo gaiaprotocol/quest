@@ -113,25 +113,26 @@ meter {
   src: url(https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlvAw.ttf) format('truetype');
 }
 :root {
-  --wrapper-bg-color: #121212;
+  --document-bg-color: #121212;
   --content-bg-color: #141414;
   --panel-bg-color: #1E1E1E;
+  --popup-bg-color: rgba(0, 0, 0, 0.5);
+  --button-bg-color: rgba(193, 168, 125, 0.12);
   --text-color: #fff;
   --line-color: #252527;
   --primary-color: #C1A87D;
+  --secondary-color: #fff;
   --error-color: #FF0000;
   --warning-color: #FFA500;
   --warning-bg-color: rgba(255, 165, 0, 0.12);
   --success-color: #00FF00;
-  --popup-bg-color: rgba(0, 0, 0, 0.5);
-  --button-bg-color: rgba(193, 168, 125, 0.12);
   --hover-color: rgba(193, 168, 125, 0.2);
   --disable-color: rgba(255, 255, 255, 0.5);
   --loading-bar-bg-color: rgba(193, 168, 125, 0.1);
   --loading-bar-color: rgba(193, 168, 125, 0.5);
   width: 100%;
   height: 100%;
-  background-color: var(--wrapper-bg-color);
+  background-color: var(--document-bg-color);
   color: var(--text-color);
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
@@ -172,6 +173,7 @@ button.component {
   justify-content: center;
   padding: 8px 16px;
   color: var(--primary-color);
+  border-radius: 6px;
   line-height: 1em;
   gap: 8px;
 }
@@ -181,7 +183,6 @@ button.component.disabled {
 }
 button.component.contained {
   border: 1px solid var(--primary-color);
-  border-radius: 6px;
   background-color: var(--button-bg-color);
 }
 button.component > .title {
@@ -212,19 +213,19 @@ button.component:hover {
     top: auto;
     bottom: 0;
     width: 100%;
-    height: calc(90px + env(safe-area-inset-bottom));
-    padding-bottom: calc(6px + env(safe-area-inset-bottom));
+    height: calc(80px + env(safe-area-inset-bottom));
+    padding-bottom: calc(4px + env(safe-area-inset-bottom));
     border-top: 1px solid var(--line-color);
     border-right: none;
     flex-direction: row;
     justify-content: space-between;
     gap: 0;
-    padding-bottom: 0;
     overflow-y: visible;
   }
   .nav-bar.component::before,
   .nav-bar.component::after {
     content: '';
+    margin: 0 -1%;
   }
 }
 .nav-bar.component > h1.logo {
@@ -245,9 +246,15 @@ button.component:hover {
   gap: 4px;
   align-items: center;
   font-size: 12px;
+  color: var(--secondary-color);
 }
 .nav-bar.component > a.menu > .icon {
   font-size: 42px;
+}
+@container (width < 1100px) {
+  .nav-bar.component > a.menu > .icon {
+    font-size: 36px;
+  }
 }
 .nav-bar.component > a.menu.active {
   color: var(--primary-color);
@@ -310,6 +317,7 @@ button.component:hover {
   padding: 24px;
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
 }
 @keyframes loading-spinner-animation {
   0% {
@@ -414,6 +422,8 @@ button.component:hover {
   display: flex;
   gap: 40px;
   padding: 10px 20px 0;
+  max-width: 100%;
+  overflow-x: auto;
 }
 .tabs.component > .tab {
   cursor: pointer;
@@ -482,6 +492,7 @@ button.component:hover {
 .select.component > .option-container > .option {
   padding: 8px 12px;
   text-transform: capitalize;
+  cursor: pointer;
 }
 .select.component > .option-container > .option:hover {
   background-color: var(--primary-color);
@@ -546,6 +557,7 @@ button.component:hover {
 .rich-display.component > .image-container > a > .image-loading-animation {
   border-radius: 12px;
   overflow: hidden;
+  max-height: 320px;
 }
 .error-alert.component > main > p {
   word-break: break-all;
@@ -585,6 +597,11 @@ button.component:hover {
 .post-display.social-component > main {
   flex-grow: 1;
 }
+.post-display.social-component > main > header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 .post-display.social-component .author-avatar {
   flex-shrink: 0;
   width: 50px;
@@ -601,8 +618,8 @@ button.component:hover {
   }
 }
 .post-display.social-component .author {
-  padding-top: 4px;
   display: flex;
+  align-items: center;
   gap: 4px;
 }
 .post-display.social-component .author > .name {
@@ -705,6 +722,9 @@ button.component:hover {
 .post-thread.social-component > .post-display,
 .post-thread.social-component > .post-form {
   border-bottom: 1px solid #242424;
+}
+.post-list.social-component {
+  position: relative;
 }
 .post-list.social-component.hidden {
   display: none;
@@ -840,7 +860,7 @@ button.component:hover {
 }
 .chat-message-form > main {
   border-top: 1px solid var(--line-color);
-  height: 56px;
+  min-height: 56px;
   display: flex;
 }
 .chat-message-form > main > section.rich {
@@ -1034,8 +1054,17 @@ button.component:hover {
   gap: 12px;
   align-items: center;
 }
-.side-panel > main > header > .signed-user > .name {
+.side-panel > main > header > .signed-user > .info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.side-panel > main > header > .signed-user > .info > .name {
   font-weight: bold;
+}
+.side-panel > main > header > .signed-user > .info > .x-username {
+  color: #595959;
+  font-size: 12px;
 }
 .side-panel > main > header > button.close {
   margin-left: auto;
@@ -1361,24 +1390,29 @@ button.component:hover {
 .mission-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
 }
-.mission-list-item {
+.mission-list-item > .points {
+  text-transform: capitalize;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.mission-list-item > main {
   background-color: var(--panel-bg-color);
   padding: 20px;
   border-radius: 12px;
 }
-.mission-list-item > header {
+.mission-list-item > main > header {
   display: flex;
   align-items: flex-start;
 }
 @container (width < 1100px) {
-  .mission-list-item > header {
+  .mission-list-item > main > header {
     flex-direction: column;
     gap: 12px;
   }
 }
-.mission-list-item > header > h2 {
+.mission-list-item > main > header > h2 {
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -1386,7 +1420,7 @@ button.component:hover {
   font-weight: bold;
   font-size: 16px;
 }
-.mission-list-item > header > .achieved {
+.mission-list-item > main > header > .achieved {
   border: 1px solid var(--success-color);
   color: var(--success-color);
   padding: 8px 12px;
@@ -1396,14 +1430,14 @@ button.component:hover {
   align-items: center;
   gap: 6px;
 }
-.mission-list-item > header > .achieved > .icon {
+.mission-list-item > main > header > .achieved > .icon {
   padding: 0;
   font-size: 16px;
 }
-.mission-list-item > header > button {
+.mission-list-item > main > header > button {
   height: 32px;
 }
-.mission-list-item > p {
+.mission-list-item > main > p {
   margin-top: 12px;
   color: #ccc;
 }
