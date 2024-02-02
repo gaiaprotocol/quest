@@ -55,10 +55,13 @@ export default class SidePanel extends DomNode {
         "main",
         el(
           "section.discord",
-          el("h3", "Discord"),
-          QuestSignedUserManager.user?.discord_username
-            ? el(".value", QuestSignedUserManager.user.discord_username)
-            : undefined,
+          el(
+            ".info",
+            el("h3", "Discord"),
+            QuestSignedUserManager.user?.discord_username
+              ? el(".value", QuestSignedUserManager.user.discord_username)
+              : undefined,
+          ),
           new Button({
             title: "Link Discord Account",
             href: Env.discordAuthUrl,
@@ -66,20 +69,23 @@ export default class SidePanel extends DomNode {
         ),
         el(
           "section.wallet-address",
-          el("h3", "Wallet Address"),
-          QuestSignedUserManager.user?.wallet_address
-            ? el(
-              "a.value",
-              StringUtil.shortenEthereumAddress(
-                QuestSignedUserManager.user.wallet_address,
-              ),
-              {
-                href:
-                  `https://etherscan.io/address/${QuestSignedUserManager.user.wallet_address}`,
-                target: "_blank",
-              },
-            )
-            : undefined,
+          el(
+            ".info",
+            el("h3", "Wallet Address"),
+            QuestSignedUserManager.user?.wallet_address
+              ? el(
+                "a.value",
+                StringUtil.shortenEthereumAddress(
+                  QuestSignedUserManager.user.wallet_address,
+                ),
+                {
+                  href:
+                    `https://etherscan.io/address/${QuestSignedUserManager.user.wallet_address}`,
+                  target: "_blank",
+                },
+              )
+              : undefined,
+          ),
           new Button({
             title: "Link Wallet",
             click: async (event, button) => {
@@ -103,17 +109,23 @@ export default class SidePanel extends DomNode {
         "main",
         el(
           "section.points",
-          el("h3", "Your Points"),
-          el(".value", String(QuestSignedUserManager.user?.points ?? 0)),
+          el(
+            ".info",
+            el("h3", "Your Points"),
+            el(".value", String(QuestSignedUserManager.user?.points ?? 0)),
+          ),
         ),
         el(
           "section.rank",
-          el("h3", "Your Rank"),
-          this.rankDisplay = el(
-            ".value",
-            this.store.get("rank")
-              ? String(this.store.get("rank"))
-              : new LoadingSpinner(),
+          el(
+            ".info",
+            el("h3", "Your Rank"),
+            this.rankDisplay = el(
+              ".value",
+              this.store.get("rank")
+                ? String(this.store.get("rank"))
+                : new LoadingSpinner(),
+            ),
           ),
         ),
       ),
