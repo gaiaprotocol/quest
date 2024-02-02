@@ -64,6 +64,8 @@ export default async function initialize(config: Config) {
       new Alert({
         title: "Discord Account Linked",
         message: "Your Discord account has been linked.",
+      }, () => {
+        location.href = "/";
       });
     }
   }

@@ -17,6 +17,7 @@ export default class MissionListItem extends DomNode {
           icon: new MaterialIcon("person_add"),
           title: "Follow",
           href: `https://x.com/${mission.criteria.target_x_username}`,
+          target: "_blank",
           click: () =>
             MissionService.followX(
               mission.id,
@@ -34,6 +35,7 @@ export default class MissionListItem extends DomNode {
           icon: new MaterialIcon("login"),
           title: "Join",
           href: mission.criteria.target_discord_url,
+          target: "_blank",
         })
         : new Button({
           title: "Link Discord Account",

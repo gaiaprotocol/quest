@@ -31,23 +31,23 @@ begin
       avatar_stored = false,
       x_username = new.raw_user_meta_data ->> 'user_name';
   elsif strpos(new.raw_user_meta_data ->> 'iss', 'discord') > 0 then
-    insert into public.users_public (user_id, display_name, avatar, avatar_thumb, avatar_stored, discord_username, discord_user_id)
+    insert into public.users_public (user_id, display_name, avatar, avatar_thumb, avatar_stored,discord_user_id, discord_username)
     values (
       new.id,
       new.raw_user_meta_data ->> 'full_name',
       new.raw_user_meta_data ->> 'avatar_url',
       new.raw_user_meta_data ->> 'avatar_url',
       false,
-      new.raw_user_meta_data ->> 'full_name',
-      new.raw_user_meta_data ->> 'sub'
+      new.raw_user_meta_data ->> 'sub',
+      new.raw_user_meta_data ->> 'full_name'
     ) on conflict (user_id) do update
     set
       display_name = new.raw_user_meta_data ->> 'full_name',
       avatar = new.raw_user_meta_data ->> 'avatar_url',
       avatar_thumb = new.raw_user_meta_data ->> 'avatar_url',
       avatar_stored = false,
-      discord_username = new.raw_user_meta_data ->> 'full_name',
-      discord_user_id = new.raw_user_meta_data ->> 'sub';
+      discord_user_id = new.raw_user_meta_data ->> 'sub',
+      discord_username = new.raw_user_meta_data ->> 'full_name';
   else
     insert into public.users_public (user_id, display_name, avatar, avatar_thumb, avatar_stored)
     values (

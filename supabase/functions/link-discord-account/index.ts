@@ -7,7 +7,7 @@ const DISCORD_SECRET = Deno.env.get("DISCORD_SECRET")!;
 
 async function fetchDiscordUserByCode(
   code: string,
-): Promise<{ id: string } | null> {
+): Promise<{ id: string; username: string } | null> {
   const tokenResponse = await fetch("https://discord.com/api/oauth2/token", {
     method: "POST",
     body: new URLSearchParams({
@@ -49,11 +49,14 @@ serveWithOptions(async (req) => {
   const { error: deleteDiscordAccountError } = await supabase.from(
     "users_public",
   ).update(
-    { discord_user_id: null },
+    { discord_user_id: null, discord_username: null },
   ).eq("discord_user_id", discordUser.id);
   if (deleteDiscordAccountError) throw deleteDiscordAccountError;
 
   const { error: setDiscordAccountError } = await supabase.from("users_public")
-    .update({ discord_user_id: discordUser.id }).eq("user_id", user.id);
+    .update({
+      discord_user_id: discordUser.id,
+      discord_username: discordUser.username,
+    }).eq("user_id", user.id);
   if (setDiscordAccountError) throw setDiscordAccountError;
 });
