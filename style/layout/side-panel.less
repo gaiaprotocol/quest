@@ -60,19 +60,26 @@
             padding   : 8px 0;
 
             >section {
-                display        : flex;
-                align-items    : center;
-                justify-content: space-between;
-                padding        : 8px 20px;
+                padding: 8px 20px;
 
-                >h3 {
-                    color    : #595959;
-                    font-size: 12px;
+                >.info {
+                    display        : flex;
+                    align-items    : center;
+                    justify-content: space-between;
+
+                    >h3 {
+                        color    : #595959;
+                        font-size: 12px;
+                    }
+
+                    >.value {
+                        font-weight: bold;
+                        color      : var(--primary-color);
+                    }
                 }
 
-                >.value {
-                    font-weight: bold;
-                    color      : var(--primary-color);
+                >button {
+                    margin-top: 8px;
                 }
             }
         }

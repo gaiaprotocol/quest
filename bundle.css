@@ -1075,18 +1075,23 @@ button.component:hover {
   padding: 8px 0;
 }
 .side-panel > main > main > section {
+  padding: 8px 20px;
+}
+.side-panel > main > main > section > .info {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 20px;
 }
-.side-panel > main > main > section > h3 {
+.side-panel > main > main > section > .info > h3 {
   color: #595959;
   font-size: 12px;
 }
-.side-panel > main > main > section > .value {
+.side-panel > main > main > section > .info > .value {
   font-weight: bold;
   color: var(--primary-color);
+}
+.side-panel > main > main > section > button {
+  margin-top: 8px;
 }
 .side-panel > main > footer {
   border-top: 1px solid var(--line-color);
