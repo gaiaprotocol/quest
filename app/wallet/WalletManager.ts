@@ -50,8 +50,8 @@ class WalletManager extends EventContainer {
       projectId,
       themeMode: "dark",
       themeVariables: {
-        "--w3m-accent-color": "#9B4CFF",
-        "--w3m-background-color": "#9B4CFF",
+        "--w3m-accent-color": "#C1A87D",
+        "--w3m-background-color": "#C1A87D",
         "--w3m-z-index": "999999",
       },
     }, ethereumClient);
