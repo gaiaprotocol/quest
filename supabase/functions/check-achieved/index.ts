@@ -17,7 +17,7 @@ async function fetchGuildMember(guildId: string, userId: string) {
 }
 
 serveWithOptions(async (req) => {
-  const { questId } = await req.json();
+  const { questId, targetDiscordUserId } = await req.json();
   if (!questId) throw new Error("Missing questId");
 
   const { data: questData, error: questError } = await supabase.from("quests")
@@ -43,17 +43,27 @@ serveWithOptions(async (req) => {
   if (missionError) throw missionError;
   if (!missionData) throw new Error("Mission not found");
 
-  const user = await getSignedUser(req);
-  if (!user) throw new Error("Unauthorized");
+  const user = targetDiscordUserId ? undefined : await getSignedUser(req);
+  if (!targetDiscordUserId && !user) throw new Error("Unauthorized");
 
-  const { data: usersPublicData, error: usersPublicError } = await supabase
-    .from("users_public").select("wallet_address, discord_user_id").eq(
-      "user_id",
-      user.id,
-    );
+  const { data: usersPublicData, error: usersPublicError } = targetDiscordUserId
+    ? await supabase
+      .from("users_public").select("user_id, wallet_address, discord_user_id")
+      .eq(
+        "discord_user_id",
+        targetDiscordUserId,
+      )
+    : await supabase
+      .from("users_public").select("user_id, wallet_address, discord_user_id")
+      .eq(
+        "user_id",
+        user?.id,
+      );
   if (usersPublicError) throw usersPublicError;
-  const walletAddress = usersPublicData?.[0]?.wallet_address;
-  const discordUserId = usersPublicData?.[0]?.discord_user_id;
+
+  const userPublic = usersPublicData?.[0];
+  const walletAddress = userPublic.wallet_address;
+  const discordUserId = userPublic.discord_user_id;
 
   const { data: missionAchievementsData, error: missionAchievementsError } =
     await supabase
@@ -64,7 +74,7 @@ serveWithOptions(async (req) => {
         missionData.map((mission) => mission.id),
       ).eq(
         "user_id",
-        user.id,
+        userPublic.user_id,
       );
   if (missionAchievementsError) throw missionAchievementsError;
 
@@ -80,11 +90,12 @@ serveWithOptions(async (req) => {
             mission.criteria.target_discord_guild_id,
             discordUserId,
           );
+          console.log(guildMember);
           if (guildMember) {
             const { error } = await supabase.from("mission_achievements")
               .insert({
                 mission_id: mission.id,
-                user_id: user.id,
+                user_id: userPublic.user_id,
                 discord_user_id: discordUserId,
                 wallet_address: walletAddress,
               });
@@ -105,7 +116,7 @@ serveWithOptions(async (req) => {
   if (achieved) {
     const { error } = await supabase.from("quest_achievements").insert({
       quest_id: questId,
-      user_id: user.id,
+      user_id: userPublic.user_id,
       discord_user_id: discordUserId,
       wallet_address: walletAddress,
     });
